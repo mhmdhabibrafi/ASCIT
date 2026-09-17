@@ -1,115 +1,135 @@
-# ASCIT (Asset Care Information Technology System)
+<div align="center">
 
-[![Repository](https://img.shields.io/badge/GitHub-mhmdhabibrafi%2FASCIT-181717?style=flat&logo=github)](https://github.com/mhmdhabibrafi/ASCIT)
-[![Issues](https://img.shields.io/github/issues/mhmdhabibrafi/ASCIT)](https://github.com/mhmdhabibrafi/ASCIT/issues)
-[![Proprietary](https://img.shields.io/badge/License-Proprietary%20All%20Rights%20Reserved-red)](./LICENSE)
-[![Framework](https://img.shields.io/badge/Next.js-15.5-black?logo=next.js)](https://nextjs.org/)
-[![Database](https://img.shields.io/badge/PostgreSQL-17-blue?logo=postgresql)](https://www.postgresql.org/)
+# ⚡ ASCIT
+### **Asset Care Information Technology System**
+*Next-Generation Enterprise IT Asset & Lifecycle Management System with Local AI Decision Support*
 
-> **Sistem Informasi Manajemen & Pemeliharaan Aset Teknologi Informasi (Asset Care IT)**  
-> Dirancang dan dibangun secara mandiri oleh **Muhammad Habib Rafi** untuk tata kelola inventaris aset IT, pemeliharaan berkala, mutasi, monitoring jaringan/IP, dan analisis siklus pakai aset berbasis AI Decision Support.
+[![Release](https://img.shields.io/github/v/tag/mhmdhabibrafi/ASCIT?label=release&color=emerald&style=for-the-badge)](https://github.com/mhmdhabibrafi/ASCIT/releases)
+[![Next.js 15](https://img.shields.io/badge/Next.js-15.5-000000?style=for-the-badge&logo=next.js&logoColor=white)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-17-4169E1?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Prisma ORM](https://img.shields.io/badge/Prisma-6.x-2D3748?style=for-the-badge&logo=prisma&logoColor=white)](https://www.prisma.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-Proprietary-dc2626?style=for-the-badge)](./LICENSE)
 
-* **Repository Resmi**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
-* **Pelaporan Masalah / Issues**: [https://github.com/mhmdhabibrafi/ASCIT/issues](https://github.com/mhmdhabibrafi/ASCIT/issues)
+<br/>
 
----
+[🌟 Repositori](https://github.com/mhmdhabibrafi/ASCIT) • [🐛 Laporkan Bug (Issues)](https://github.com/mhmdhabibrafi/ASCIT/issues) • [📖 Panduan Docker](./INSTALL-DOCKER-UBUNTU.md) • [📜 Lisensi](./LICENSE)
 
-## 👤 Pengembang & Pemilik Sistem
-
-Sistem ini dirancang, dibangun, dan dimiliki sepenuhnya oleh:
-
-* **Author / Creator / Software Engineer**: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))
-* **Repository**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
-* **Lisensi**: Proprietary & All Rights Reserved (Lihat [LICENSE](./LICENSE))
+</div>
 
 ---
 
-## 📋 Fitur Utama Sistem
+## 📌 Ringkasan Sistem
 
-1. **Dashboard Operasional Eksekutif & Real-time**
-   - Ringkasan total aset, status kondisi (Baik, Rusak Ringan, Rusak Berat), dan distribusi kategori.
-   - Grafik riwayat mutasi, service record bulanan, dan beban kerja pemeliharaan.
-   - Shortcut aksi cepat untuk penambahan aset, input servis, dan pelaporan insiden.
+**ASCIT (Asset Care Information Technology System)** adalah platform perangkat lunak manajemen inventaris, siklus pakai (*lifecycle*), pemeliharaan (*maintenance*), mutasi, dan pengawasan alokasi jaringan (IP Address) aset IT kelas enterprise.
 
-2. **Manajemen Data Aset IT & Vendor**
-   - Pencatatan spesifikasi detail aset rumah sakit (PC, Laptop, Server, Switch, Printer, UPS, CCTV, dll.).
-   - Inventarisasi aset pihak ketiga / sewa (Vendor Assets).
-   - Penomoran kode unik otomatis & pencetakan label **QR Code** untuk penempelan fisik pada perangkat.
-
-3. **Pelacakan Mutasi & Pergerakan Aset**
-   - Riwayat perpindahan unit kerja, ruangan, dan penanggung jawab aset secara runut (*traceable*).
-   - Validasi approval mutasi dan berita acara serah terima aset digital.
-
-4. **Service Records & Maintenance History**
-   - Dokumentasi riwayat perawatan preventif dan perbaikan korektif.
-   - Pencatatan suku cadang pengganti (*spare parts*), estimasi biaya, teknisi internal, dan vendor eksternal.
-   - Rekam jejak waktu henti (*downtime*) dan status penyelesaian servis.
-
-5. **Monitoring Siklus Pakai & AI Decision Support**
-   - Estimasi depresiasi dan umur ekonomis perangkat IT.
-   - Rekomendasi otomatis berbasis analisis beban servis untuk peremajaan (*replacement*) atau perawatan intensif.
-
-6. **Monitoring IP Address & Alokasi Jaringan**
-   - Pemetaan pembagian IP static/DHCP pada unit dan perangkat jaringan.
-   - Pencegahan tabrakan IP (*duplicate IP check*) dan audit ketersediaan pool subnet rumah sakit.
-
-7. **Sistem Pemindaian QR Code (Scan QR)**
-   - Integrasi kamera smartphone / scanner USB langsung dari aplikasi web.
-   - Inspeksi cepat detail aset dan riwayat perbaikan hanya dengan memindai stiker QR pada fisik perangkat.
-
-8. **Keamanan, RBAC & Audit Log**
-   - Otentikasi aman berbasis sesi via NextAuth.js.
-   - *Role-Based Access Control* (Super Admin, IT Admin, Teknisi, Staf Unit).
-   - Pencatatan aktivitas sensitif pengguna ke dalam *Audit Trail* yang tidak dapat dimanipulasi.
+Sistem ini dirancang dan dikembangkan secara mandiri oleh **Muhammad Habib Rafi** dengan arsitektur modern berbasis Next.js App Router, PostgreSQL, serta dukungan modul kecerdasan buatan (*AI Decision Support*) lokal melalui Ollama untuk evaluasi depresiasi dan rekomendasi peremajaan perangkat secara otomatis.
 
 ---
 
-## 💻 Tech Stack
+## 🏗️ Arsitektur Sistem
 
-* **Framework**: [Next.js 15](https://nextjs.org/) (App Router, Turbopack Engine)
-* **Frontend Library**: [React 19](https://react.dev/) & [TypeScript](https://www.typescriptlang.org/)
-* **Styling**: [Tailwind CSS](https://tailwindcss.com/) & Vanilla CSS Design System
-* **Database & ORM**: [PostgreSQL](https://www.postgresql.org/) & [Prisma ORM v6](https://www.prisma.io/)
-* **Authentication**: [NextAuth.js v4](https://next-auth.js.org/)
-* **Icons & Typography**: Google Fonts (Inter, Material Symbols Rounded) & Lucide React
-* **Data Processing**: ExcelJS (Laporan Spreadsheet) & QRCode Generator
+```mermaid
+flowchart TD
+    subgraph ClientLayer ["Client & Interface Layer"]
+        Browser["Modern Web Browser / Mobile"]
+        QRScanner["Integrated Camera QR Scanner"]
+    end
 
----
+    subgraph AppLayer ["Application & API (Next.js 15 App Router)"]
+        NextAuth["NextAuth.js (Session & RBAC)"]
+        APIRoutes["REST API Endpoints & Reports"]
+        UIPages["Tailwind & React 19 Components"]
+    end
 
-## 📁 Struktur Direktori Proyek
+    subgraph CoreServices ["Core Services & Background Engines"]
+        PrismaClient["Prisma ORM (Schema & Query Engine)"]
+        AIWorker["AI Decision Support Engine (Ollama Qwen3)"]
+        IPMonitor["IP Subnet Conflict & Ping Monitor"]
+    end
 
+    subgraph DataLayer ["Data & Storage Layer"]
+        PostgreSQL[("PostgreSQL 17 Database")]
+        FileStorage[("Asset Documents & QR Labels")]
+    end
+
+    Browser --> UIPages
+    QRScanner --> UIPages
+    UIPages --> NextAuth
+    UIPages --> APIRoutes
+    APIRoutes --> PrismaClient
+    APIRoutes --> IPMonitor
+    AIWorker --> PrismaClient
+    PrismaClient --> PostgreSQL
+    AIWorker --> PostgreSQL
 ```
+
+---
+
+## 🌟 Fitur Utama
+
+| Modul | Deskripsi & Keunggulan |
+| :--- | :--- |
+| 📊 **Executive Dashboard** | Statistik real-time total aset, klasifikasi status kondisi (Baik, Rusak Ringan, Rusak Berat, Layak Ganti), metrik pengeluaran servis, dan grafik distribusi per unit. |
+| 🖥️ **Manajemen Aset IT & Vendor** | Inventarisasi lengkap perangkat (PC, Laptop, Server, Switch, Printer, CCTV, UPS, Kiosk). Pemisahan data aset internal rumah sakit dan aset vendor sewa. |
+| 🏷️ **QR Code Auto-Generator** | Setiap aset otomatis memiliki kode QR unik terenkripsi untuk pencetakan label fisik, memudahkan audit inventaris dan inventarisasi cepat di lapangan. |
+| 🔄 **Pelacakan Mutasi Terpusat** | Rekam jejak mutasi antar-unit, antar-ruangan, dan serah terima penanggung jawab aset dengan histori kronologis yang transparan. |
+| 🛠️ **Service Records & Maintenance** | Dokumentasi perawatan preventif berkala dan perbaikan korektif, pencatatan suku cadang pengganti (*spare parts*), teknisi, dan estimasi biaya perbaikan. |
+| 🤖 **AI Decision Support** | Analisis beban kerja dan siklus pakai perangkat IT untuk memberikan rekomendasi otomatis: *Upgrade RAM/SSD*, *Maintenance Berkala*, atau *Prioritas Penggantian*. |
+| 🌐 **Monitoring IP & Jaringan** | Pemetaan alokasi alamat IP jaringan static/DHCP per subnet, audit duplikasi IP (*IP collision detection*), dan monitoring ketersediaan host. |
+| 🛡️ **Role-Based Access & Audit Trail** | Pembagian hak akses granular (*Super Admin*, *Admin IT*, *Staff IT*, *Kepala IT*, *Manajemen*) serta pencatatan seluruh mutasi data ke dalam log audit tak terhapus. |
+
+---
+
+## 💻 Tech Stack & Ketergantungan
+
+* **Frontend Framework**: [Next.js 15.5](https://nextjs.org/) (React 19, Turbopack)
+* **Bahasa**: [TypeScript 5](https://www.typescriptlang.org/)
+* **Gaya Antarmuka**: [Tailwind CSS](https://tailwindcss.com/) & Vanilla CSS Design Tokens
+* **Basis Data**: [PostgreSQL 17](https://www.postgresql.org/)
+* **ORM**: [Prisma Client v6](https://www.prisma.io/)
+* **Autentikasi**: [NextAuth.js v4](https://next-auth.js.org/)
+* **Ekspor & Utilitas**: ExcelJS (Laporan Spreadsheet), QRCode, ZXing Barcode Scanner
+* **AI Model Runner**: [Ollama](https://ollama.ai/) (Qwen3 LLM)
+* **Containerization**: [Docker](https://www.docker.com/) & Docker Compose
+
+---
+
+## 📁 Struktur Direktori
+
+```text
 ascit/
-├── backups/                    # Arsip database & backup data
 ├── prisma/
 │   ├── schema.prisma           # Skema database relasional Prisma
-│   └── migrations/             # Riwayat migrasi database
-├── public/
-│   └── images/                 # Logo RS Awal Bros & aset gambar publik
+│   ├── seed.ts                 # Script seeding data dummy simulasi
+│   └── migrations/             # Riwayat migrasi skema database
+├── public/                     # Aset visual statis publik & logo
 ├── scripts/
-│   ├── local.mjs               # Controller runner aplikasi & database lokal
-│   ├── local-config.mjs        # Konfigurasi embedded PostgreSQL lokal
-│   └── ai-worker.ts            # Background worker pendukung sistem
+│   ├── local.mjs               # Otomasi runner database & aplikasi lokal
+│   ├── local-config.mjs        # Konfigurasi koneksi PostgreSQL lokal
+│   ├── ai-worker.ts            # Background worker analisis AI
+│   └── db-health.mjs           # Script validasi kesehatan database
 ├── src/
-│   ├── app/                    # Next.js App Router (Rute halaman & API)
-│   │   ├── (auth)/login/       # Halaman autentikasi login
-│   │   ├── dashboard/          # Dashboard operasional
-│   │   ├── assets/             # Manajemen data aset IT
-│   │   ├── vendor-assets/      # Manajemen aset vendor
-│   │   ├── mutations/          # Modul mutasi & transfer aset
+│   ├── app/                    # Next.js App Router (Rute halaman & REST API)
+│   │   ├── dashboard/          # Dashboard operasional eksekutif
+│   │   ├── assets/             # Inventaris aset IT
+│   │   ├── vendor-assets/      # Inventaris aset vendor
+│   │   ├── mutations/          # Modul mutasi aset
 │   │   ├── service-records/    # Riwayat servis & pemeliharaan
-│   │   ├── monitoring/         # Monitoring IP address & jaringan
-│   │   ├── recommendations/    # AI Decision support & analitik
-│   │   ├── master-data/        # Referensi unit, ruangan, vendor, kategori
-│   │   ├── users/              # Manajemen pengguna & role
-│   │   ├── audit-log/          # Catatan log aktivitas pengguna
-│   │   └── settings/           # Pengaturan konfigurasi & runtime
+│   │   ├── monitoring/         # Pemantauan IP Address & Jaringan
+│   │   ├── recommendations/    # AI Decision Support
+│   │   ├── master-data/        # Referensi master data institusi
+│   │   ├── users/              # Manajemen pengguna & permissions
+│   │   ├── audit-log/          # Audit trail aktivitas pengguna
+│   │   └── settings/           # Pengaturan konfigurasi & backup
 │   ├── components/             # Reusable UI & Layout Components
-│   └── lib/                    # Helper logika, auth, branding, permissions
-├── docker-compose.yml          # Konfigurasi deployment container Docker
+│   └── lib/                    # Helper logic, prisma client, auth, rbac
+├── docker-compose.yml          # Konfigurasi container Docker produksi
 ├── Dockerfile                  # Multi-stage production container build
-├── INSTALL-DOCKER-UBUNTU.md     # Panduan instalasi Ubuntu Server
-└── package.json
+├── INSTALL-DOCKER-UBUNTU.md     # SOP instalasi Docker di Ubuntu Server
+├── LICENSE                     # Lisensi kepemilikan eksklusif
+└── README.md                   # Dokumentasi utama proyek
 ```
 
 ---
@@ -120,68 +140,86 @@ ascit/
 
 ASCIT dilengkapi dengan script otomasi `local.mjs` yang dapat mengelola database PostgreSQL lokal bawaan secara mandiri:
 
-1. **Install Dependensi**:
+1. **Clone Repositori**:
+   ```bash
+   git clone https://github.com/mhmdhabibrafi/ASCIT.git
+   cd ASCIT
+   ```
+
+2. **Install Dependensi**:
    ```bash
    npm install
    ```
 
-2. **Siapkan File Konfigurasi Lingkungan (`.env`)**:
-   Salin dari template:
+3. **Siapkan File Lingkungan (`.env`)**:
    ```bash
    cp .env.example .env
    ```
-   Pastikan variabel `DATABASE_URL` dan `NEXTAUTH_SECRET` telah terisi.
 
-3. **Setup Database & Jalankan Migrasi**:
+4. **Inisialisasi Database & Seeding**:
    ```bash
    npm run db:setup
    ```
 
-4. **Mulai Server Pengembangan (Dev Server)**:
+5. **Mulai Dev Server**:
    ```bash
    npm run dev
    ```
-   Aplikasi akan aktif di `http://localhost:3000`.
+   Buka browser di: **`http://localhost:3000`**
 
 ---
 
 ### 2. Menjalankan di Server Produksi (Docker & Ubuntu)
 
-Untuk penerapan pada server VPS atau server fisik Ubuntu di RS Awal Bros Panam:
+Untuk deployment menggunakan container Docker pada Ubuntu Server:
 
-1. Baca panduan lengkap instalasi Docker pada [INSTALL-DOCKER-UBUNTU.md](./INSTALL-DOCKER-UBUNTU.md).
-2. Jalankan container dengan Docker Compose:
+1. Baca panduan langkah demi langkah pada **[INSTALL-DOCKER-UBUNTU.md](./INSTALL-DOCKER-UBUNTU.md)**.
+2. Jalankan container:
    ```bash
    docker compose up -d --build
    ```
-3. Pantau status container:
+3. Cek status:
    ```bash
    docker compose ps
-   docker compose logs -f app
    ```
 
 ---
 
-## 🔑 Hak Akses & Akun Demo (Data Sintetis / Dummy)
+## 🔑 Akun Demo Pengujian (Data Sintetis / Dummy)
 
-Saat database di-*seed* menggunakan script seeding bawaan (`prisma/seed.ts`), sistem membuat akun dummy untuk pengujian lokal:
+Saat database di-*seed* menggunakan script seeding (`prisma/seed.ts`), sistem menyiapkan akun dummy berikut untuk keperluan evaluasi lokal:
 
-| Role | Username / Email | Password Default (Demo) | Catatan |
+| Role | Username / Email | Password Default | Hak Akses |
 | :--- | :--- | :--- | :--- |
-| **Admin IT** | `admin` / `admin@ascit.local` | `DemoPassword123` | Akses penuh operasional IT |
-| **Staff IT** | `staf` / `staf@ascit.local` | `DemoPassword123` | Teknisi perbaikan & mutasi |
-| **Kepala IT** | `kepala` / `kepala@ascit.local` | `DemoPassword123` | Approval & evaluasi siklus |
-| **Manajemen**| `manajemen` / `manajemen@ascit.local` | `DemoPassword123` | Monitoring & laporan eksekutif |
+| **Admin IT** | `admin` / `admin@ascit.local` | `DemoPassword123` | Akses penuh operasional IT & Master Data |
+| **Staff IT** | `staf` / `staf@ascit.local` | `DemoPassword123` | Input servis, scan QR & pengajuan mutasi |
+| **Kepala IT** | `kepala` / `kepala@ascit.local` | `DemoPassword123` | Approval mutasi & evaluasi rekomendasi AI |
+| **Manajemen**| `manajemen` / `manajemen@ascit.local` | `DemoPassword123` | Laporan eksekutif & monitoring aset |
 
 > **PERHATIAN KEAMANAN**: 
-> Seluruh data bawaan repository (perangkat, serial number, alamat IP `10.99.x.x`, dan akun di atas) adalah **100% data dummy sintetis** semata. Untuk penggunaan produksi rumah sakit, jangan gunakan password demo dan definisikan kredensial yang kuat melalui file `.env`.
+> Seluruh data awal repository (perangkat dummy, nomor seri dummy, alamat IP `10.99.x.x`, dan akun di atas) adalah **100% data tiruan sintetis** untuk tujuan pengujian. Untuk server produksi, definisikan kredensial yang aman melalui file `.env`.
 
 ---
 
-## 📞 Bantuan, Bug & Dukungan Teknis
+## 👤 Pengembang & Hak Cipta
 
-Untuk pertanyaan teknis, kendala bug, atau permohonan fitur baru:
-* Cukup buat laporan atau tiket baru melalui **[GitHub Issues](https://github.com/mhmdhabibrafi/ASCIT/issues)** di repositori ini.
+* **Pencipta & Pengembang**: **Muhammad Habib Rafi**
+* **GitHub Profile**: [@mhmdhabibrafi](https://github.com/mhmdhabibrafi)
+* **Repositori Resmi**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
 
 ---
-*Copyright © 2026 Muhammad Habib Rafi. All rights reserved.*
+
+## 📞 Bantuan & Pelaporan Bug
+
+Jika Anda menemukan kendala teknis atau permohonan pengembangan fitur:
+* Silakan buat tiket kendala melalui **[GitHub Issues](https://github.com/mhmdhabibrafi/ASCIT/issues)**.
+
+---
+
+## 📜 Lisensi
+
+Sistem ini dilindungi oleh **Proprietary & All Rights Reserved License**. Dilarang memperbanyak, mendistribusikan ulang, menjual kembali, atau menghapus atribusi pencipta tanpa izin tertulis resmi dari pembuat hak cipta. Lihat detail lengkap pada file **[LICENSE](./LICENSE)**.
+
+<div align="center">
+  <sub>Copyright © 2026 <b>Muhammad Habib Rafi</b>. All rights reserved.</sub>
+</div>
