@@ -1,0 +1,54 @@
+services:
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    volumes:
+      - ollama_models:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ascit
+      POSTGRES_USER: ascit
+      POSTGRES_PASSWORD: ascit-local-db
+    volumes:
+      - ascit_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ascit -d ascit"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      ollama:
+        condition: service_started
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://ascit:ascit-local-db@db:5432/ascit?schema=public
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: local-ascit-nextauth-secret-change-later
+      OLLAMA_BASE_URL: http://ollama:11434/api
+      OLLAMA_MODEL: qwen3:1.7b
+      OLLAMA_MAX_TOKENS: "2048"
+      OLLAMA_TIMEOUT_MS: "120000"
+      SEED_ADMIN_PASSWORD: ASCIT@123
+      SEED_STAF_PASSWORD: ASCIT@123
+      SEED_KEPALA_PASSWORD: ASCIT@123
+      SEED_MANAJEMEN_PASSWORD: ASCIT@123
+      ALLOW_DESTRUCTIVE_SEED: "true"
+    ports:
+      - "0.0.0.0:3000:3000"
+
+volumes:
+  ascit_db:
+  ollama_models:

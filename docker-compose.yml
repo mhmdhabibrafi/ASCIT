@@ -1,0 +1,74 @@
+services:
+  ollama:
+    image: ollama/ollama@sha256:6345fbc18bd73a1e16404be681dbc6fd291a027cab43ed541abe78c4c81051b0
+    volumes:
+      - ollama_models:/root/.ollama
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT:-11434}:11434"
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    restart: unless-stopped
+  ascit-db:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-ascit}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD wajib diisi di .env}
+      POSTGRES_DB: ${POSTGRES_DB:-ascit}
+    volumes:
+      - ascit_ascit_db:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ascit} -d ${POSTGRES_DB:-ascit}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+  ascit-app:
+    build: { context: ., dockerfile: Dockerfile, target: runner }
+    ports:
+      - "${APP_BIND_IP:-127.0.0.1}:${APP_PORT:-3000}:3000"
+    depends_on:
+      ascit-db: { condition: service_healthy }
+      ollama: { condition: service_healthy }
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ascit}:${POSTGRES_PASSWORD}@ascit-db:5432/${POSTGRES_DB:-ascit}?schema=public
+      NEXTAUTH_URL: ${NEXTAUTH_URL:-http://localhost:3000}
+      NEXTAUTH_SECRET: ${NEXTAUTH_SECRET:?NEXTAUTH_SECRET wajib diisi di .env}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434/api}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:1.7b}
+      OLLAMA_MAX_TOKENS: ${OLLAMA_MAX_TOKENS:-512}
+      OLLAMA_MAX_OUTPUT_TOKENS: ${OLLAMA_MAX_OUTPUT_TOKENS:-512}
+      OLLAMA_TIMEOUT_MS: ${OLLAMA_TIMEOUT_MS:-90000}
+      SEED_ADMIN_PASSWORD: ${SEED_ADMIN_PASSWORD:-}
+      SEED_STAF_PASSWORD: ${SEED_STAF_PASSWORD:-}
+      SEED_KEPALA_PASSWORD: ${SEED_KEPALA_PASSWORD:-}
+      SEED_MANAJEMEN_PASSWORD: ${SEED_MANAJEMEN_PASSWORD:-}
+      ALLOW_DESTRUCTIVE_SEED: ${ALLOW_DESTRUCTIVE_SEED:-false}
+      ALLOW_WEB_DATABASE_CLEAR: ${ALLOW_WEB_DATABASE_CLEAR:-false}
+      ALLOW_WEB_SQL_RESTORE: ${ALLOW_WEB_SQL_RESTORE:-false}
+    command: node server.js
+    restart: unless-stopped
+  ascit-worker:
+    build: { context: ., dockerfile: Dockerfile, target: worker }
+    depends_on:
+      ascit-db: { condition: service_healthy }
+      ollama: { condition: service_healthy }
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgresql://${POSTGRES_USER:-ascit}:${POSTGRES_PASSWORD}@ascit-db:5432/${POSTGRES_DB:-ascit}?schema=public
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434/api}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:1.7b}
+      OLLAMA_MAX_TOKENS: ${OLLAMA_MAX_TOKENS:-512}
+      OLLAMA_MAX_OUTPUT_TOKENS: ${OLLAMA_MAX_OUTPUT_TOKENS:-512}
+      OLLAMA_TIMEOUT_MS: ${OLLAMA_TIMEOUT_MS:-90000}
+      AI_WORKER_CONCURRENCY: ${AI_WORKER_CONCURRENCY:-1}
+      AI_WORKER_POLL_MS: ${AI_WORKER_POLL_MS:-1000}
+    command: npm run worker
+    restart: unless-stopped
+volumes:
+  ascit_ascit_db:
+    external: true
+  ollama_models:
