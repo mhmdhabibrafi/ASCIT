@@ -1,25 +1,26 @@
 # ASCIT (Asset Care Information Technology System)
-### RS Awal Bros Panam Pekanbaru
 
 [![Repository](https://img.shields.io/badge/GitHub-mhmdhabibrafi%2FASCIT-181717?style=flat&logo=github)](https://github.com/mhmdhabibrafi/ASCIT)
+[![Issues](https://img.shields.io/github/issues/mhmdhabibrafi/ASCIT)](https://github.com/mhmdhabibrafi/ASCIT/issues)
 [![Proprietary](https://img.shields.io/badge/License-Proprietary%20All%20Rights%20Reserved-red)](./LICENSE)
 [![Framework](https://img.shields.io/badge/Next.js-15.5-black?logo=next.js)](https://nextjs.org/)
 [![Database](https://img.shields.io/badge/PostgreSQL-17-blue?logo=postgresql)](https://www.postgresql.org/)
 
-> **Sistem Informasi Manajemen & Pemeliharaan Aset Teknologi Informasi**  
-> Dikembangkan khusus untuk tata kelola inventaris, pemeliharaan berkala, mutasi, monitoring jaringan/IP, dan analisis siklus pakai aset IT di lingkungan **RS Awal Bros Panam Pekanbaru**.
+> **Sistem Informasi Manajemen & Pemeliharaan Aset Teknologi Informasi (Asset Care IT)**  
+> Dirancang dan dibangun secara mandiri oleh **Muhammad Habib Rafi** untuk tata kelola inventaris aset IT, pemeliharaan berkala, mutasi, monitoring jaringan/IP, dan analisis siklus pakai aset berbasis AI Decision Support.
 
 * **Repository Resmi**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
+* **Pelaporan Masalah / Issues**: [https://github.com/mhmdhabibrafi/ASCIT/issues](https://github.com/mhmdhabibrafi/ASCIT/issues)
 
 ---
 
-## 👥 Tim & Struktur Pengembang
+## 👤 Pengembang & Pemilik Sistem
 
-Sistem ini dirancang, dibangun, dan dikelola oleh:
+Sistem ini dirancang, dibangun, dan dimiliki sepenuhnya oleh:
 
-* **Programmer / Software Engineer**: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))
-* **Kepala Departemen IT**: **Arpi Nanda Putra, S.Kom.**
-* **Unit Kerja**: **Departemen Teknologi Informasi (IT) — RS Awal Bros Panam Pekanbaru**
+* **Author / Creator / Software Engineer**: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))
+* **Repository**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
+* **Lisensi**: Proprietary & All Rights Reserved (Lihat [LICENSE](./LICENSE))
 
 ---
 
@@ -177,12 +178,10 @@ Saat database di-*seed* menggunakan script seeding bawaan (`prisma/seed.ts`), si
 
 ---
 
-## 📞 Kontak & Dukungan Teknis
+## 📞 Bantuan, Bug & Dukungan Teknis
 
 Untuk pertanyaan teknis, kendala bug, atau permohonan fitur baru:
-* **Departemen IT RS Awal Bros Panam Pekanbaru**
-* **Penanggung Jawab**: Arpi Nanda Putra, S.Kom. (Kepala Departemen IT)
-* **Pengembang**: Muhammad Habib Rafi (Programmer)
+* Cukup buat laporan atau tiket baru melalui **[GitHub Issues](https://github.com/mhmdhabibrafi/ASCIT/issues)** di repositori ini.
 
 ---
-*Copyright © 2026 RS Awal Bros Panam Pekanbaru. All rights reserved.*
+*Copyright © 2026 Muhammad Habib Rafi. All rights reserved.*

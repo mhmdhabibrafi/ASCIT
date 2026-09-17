@@ -575,22 +575,27 @@ export function AppShell({ children }: { children: React.ReactNode }) {
           {children}
         </div>
 
-        {/* AdminLTE-style Footer with Official Attribution Lock */}
+        {/* AdminLTE-style Footer with Creator Attribution & Issues Link */}
         <footer className="mt-auto border-t border-slate-200 bg-white py-3.5 px-4 sm:px-5 lg:px-6 text-center sm:text-left text-xs text-slate-500 flex flex-col md:flex-row md:items-center md:justify-between gap-2 select-none shrink-0">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
             <div>
               <span className="font-bold text-slate-600">Copyright &copy; {new Date().getFullYear()}</span>{" "}
-              <span className="font-bold text-emerald-800">{hospitalBrand.name}</span>. All rights reserved.
+              <span className="font-bold text-slate-800">Muhammad Habib Rafi</span>. All rights reserved.
             </div>
             <span className="hidden sm:inline text-slate-300">|</span>
             <div className="text-[11px] text-slate-400">
-              Dev: <span className="font-semibold text-slate-600">Muhammad Habib Rafi</span> (Under Ka. Dept: <span className="font-medium text-slate-600">Arpi Nanda Putra, S.Kom.</span>)
+              System: <span className="font-semibold text-emerald-700">{systemBrand.name}</span>
             </div>
           </div>
-          <div className="md:text-right font-medium text-slate-400 flex items-center justify-center md:justify-end gap-2 text-[11px]">
-            <span className="inline-flex items-center rounded-full bg-emerald-50 px-2 py-0.5 text-[10px] font-semibold text-emerald-700 ring-1 ring-inset ring-emerald-600/20">
-              RS Awal Bros Panam
-            </span>
+          <div className="md:text-right font-medium text-slate-400 flex items-center justify-center md:justify-end gap-2.5 text-[11px]">
+            <a
+              href="https://github.com/mhmdhabibrafi/ASCIT/issues"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center rounded-full bg-slate-100 hover:bg-slate-200 px-2.5 py-0.5 text-[10px] font-semibold text-slate-700 transition"
+            >
+              GitHub Issues
+            </a>
             <span><b>{systemBrand.name}</b> v1.0.0</span>
           </div>
         </footer>

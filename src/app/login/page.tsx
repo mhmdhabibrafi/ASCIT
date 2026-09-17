@@ -87,10 +87,10 @@ export default function LoginPage() {
 
         <div className="mt-6 border-t border-slate-100 pt-4 text-center text-[11px] font-medium text-slate-500 space-y-1">
           <div>
-            © {new Date().getFullYear()} <span className="font-semibold text-slate-700">{systemBrand.name}</span> — {hospitalBrand.name}
+            © {new Date().getFullYear()} <span className="font-semibold text-slate-700">{systemBrand.name}</span> by Muhammad Habib Rafi
           </div>
           <div className="text-[10px] text-slate-400">
-            Unit IT RS Awal Bros Panam Pekanbaru
+            All rights reserved. Support via <a href="https://github.com/mhmdhabibrafi/ASCIT/issues" target="_blank" rel="noreferrer" className="underline hover:text-slate-600">GitHub Issues</a>
           </div>
         </div>
       </Card>

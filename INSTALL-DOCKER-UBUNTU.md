@@ -1,11 +1,10 @@
 # Panduan Instalasi Docker & Deployment ASCIT di Ubuntu Server
-### RS Awal Bros Panam Pekanbaru
 
-> **Dokumen Panduan Standar Operasional Prosedur (SOP) Deployment**  
+> **Panduan Deployment Server**  
 > Sistem: **ASCIT (Asset Care Information Technology System)**  
-> Unit: **Departemen Teknologi Informasi (IT) — RS Awal Bros Panam Pekanbaru**  
-> Kepala Departemen IT: **Arpi Nanda Putra, S.Kom.**  
-> Programmer: **Muhammad Habib Rafi**  
+> Pengembang / Pencipta: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))  
+> Repositori: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)  
+> Pusat Bantuan: [GitHub Issues](https://github.com/mhmdhabibrafi/ASCIT/issues)  
 
 ---
 
@@ -227,13 +226,12 @@ sudo apt install --only-upgrade docker-ce docker-ce-cli containerd.io docker-com
 
 ---
 
-## 10. Struktur Penanggung Jawab
+## 10. Bantuan & Dukungan Teknis
 
 Jika ditemukan kendala teknis saat deployment atau pengoperasian di server:
 
-* **Departemen**: Teknologi Informasi (IT) — RS Awal Bros Panam Pekanbaru
-* **Kepala Departemen IT**: **Arpi Nanda Putra, S.Kom.**
-* **Pengembang / Programmer**: **Muhammad Habib Rafi**
+* **Pengembang**: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))
+* **Pelaporan Masalah**: Silakan buat tiket kendala pada **[GitHub Issues](https://github.com/mhmdhabibrafi/ASCIT/issues)**.
 
 ---
-*Dokumen Resmi Departemen IT — RS Awal Bros Panam Pekanbaru © 2026*
+*Copyright © 2026 Muhammad Habib Rafi. All rights reserved.*
