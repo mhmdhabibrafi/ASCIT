@@ -20,11 +20,22 @@
 
 ---
 
-## 📌 Ringkasan Sistem
+## 📌 Ringkasan Sistem & Latar Belakang
 
 **ASCIT (Asset Care Information Technology System)** adalah platform perangkat lunak manajemen inventaris, siklus pakai (*lifecycle*), pemeliharaan (*maintenance*), mutasi, dan pengawasan alokasi jaringan (IP Address) aset IT kelas enterprise.
 
-Sistem ini dirancang dan dikembangkan secara mandiri oleh **Muhammad Habib Rafi** dengan arsitektur modern berbasis Next.js App Router, PostgreSQL, serta dukungan modul kecerdasan buatan (*AI Decision Support*) lokal melalui Ollama untuk evaluasi depresiasi dan rekomendasi peremajaan perangkat secara otomatis.
+Sistem ini dirancang dan dibangun secara mandiri oleh **Muhammad Habib Rafi** dengan arsitektur modern berbasis Next.js App Router, PostgreSQL, serta dukungan modul kecerdasan buatan (*AI Decision Support*) lokal melalui Ollama untuk evaluasi depresiasi dan rekomendasi peremajaan perangkat secara otomatis.
+
+---
+
+## 🏥 Implementasi Nyata & Studi Kasus Operasional
+
+Sistem ini diterapkan dan digunakan secara nyata pada lingkungan operasional **RS Awal Bros Panam Pekanbaru** untuk digitalisasi tata kelola aset divisi IT:
+
+* **Unit Implementasi**: **Departemen Teknologi Informasi (IT) — RS Awal Bros Panam Pekanbaru**
+* **Pengembang Sistem / Software Engineer**: **Muhammad Habib Rafi** *(Dikembangkan dalam program Internship / Magang Divisi IT)*
+* **Kepala Divisi / Kepala Departemen IT (Supervisor)**: **Arpi Nanda Putra, S.Kom.** *(Mengarahkan proses bisnis, kebutuhan alur operasional divisi IT, dan validasi implementasi lapangan)*
+* **Cakupan Penggunaan**: Pencatatan ribuan aset rumah sakit (PC unit medis/administrasi, server, switch, printer resep, AP wifi koridor, CCTV), pelacakan mutasi antar-ruangan, audit IP static/DHCP, dan sistem tiket riwayat servis perangkat.
 
 ---
 
@@ -203,8 +214,8 @@ Saat database di-*seed* menggunakan script seeding (`prisma/seed.ts`), sistem me
 
 ## 👤 Pengembang & Hak Cipta
 
-* **Pencipta & Pengembang**: **Muhammad Habib Rafi**
-* **GitHub Profile**: [@mhmdhabibrafi](https://github.com/mhmdhabibrafi)
+* **Pencipta & Pengembang Mandiri**: **Muhammad Habib Rafi** ([@mhmdhabibrafi](https://github.com/mhmdhabibrafi))
+* **Latar Belakang Proyek**: Dikembangkan selama masa *IT Software Engineering Internship* di Departemen IT RS Awal Bros Panam Pekanbaru di bawah arahan Kepala Departemen IT **Arpi Nanda Putra, S.Kom.**
 * **Repositori Resmi**: [https://github.com/mhmdhabibrafi/ASCIT](https://github.com/mhmdhabibrafi/ASCIT)
 
 ---
