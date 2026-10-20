@@ -1,0 +1,13 @@
+
+> ascit@1.0.0 test
+> jest --runInBand --no-cache
+
+PASS src/__tests__/error-handler.spec.ts
+PASS src/__tests__/scoring-engine.spec.ts
+PASS src/__tests__/rate-limit.spec.ts
+
+Test Suites: 3 passed, 3 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        2.857 s
+Ran all test suites.

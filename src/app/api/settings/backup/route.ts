@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { requireSession, hasSessionPermission } from "@/lib/api";
 import { Permission } from "@/lib/permissions";
 import { prisma } from "@/lib/prisma";
+import { postgresEnvironment, postgresTool } from "@/lib/postgres-client";
 
 const execFileAsync = promisify(execFile);
 
@@ -18,6 +19,20 @@ export async function GET(request: NextRequest) {
 
   const { searchParams } = new URL(request.url);
   const format = searchParams.get("format") || "json";
+  if (format === "status") {
+    const probe = async (tool: "pg_dump" | "psql") => {
+      try {
+        await execFileAsync(postgresTool(tool), ["--version"], { timeout: 5000, windowsHide: true });
+        return true;
+      } catch { return false; }
+    };
+    const [sqlReady, psqlReady] = await Promise.all([probe("pg_dump"), probe("psql")]);
+    const restoreEnabled = process.env.ALLOW_WEB_SQL_RESTORE === "true";
+    return NextResponse.json({ sqlReady, restoreEnabled, restoreReady: restoreEnabled && psqlReady }, {
+      headers: { "Cache-Control": "no-store" }
+    });
+  }
+  if (!["sql", "json"].includes(format)) return NextResponse.json({ error: "Format ekspor tidak valid." }, { status: 400 });
 
   const dateStr = new Date().toISOString().replace(/T/, "_").replace(/\..+/, "").replace(/:/g, "-");
   
@@ -28,17 +43,15 @@ export async function GET(request: NextRequest) {
         throw new Error("DATABASE_URL tidak terdefinisi di environment.");
       }
 
-      const pgDumpPath = process.env.PG_DUMP_PATH || "pg_dump";
-      const { stdout, stderr } = await execFileAsync(pgDumpPath, [
-        `--dbname=${connUrl}`,
-        "-F", "p", "--clean", "--if-exists", "--inserts"
+      const { stdout } = await execFileAsync(postgresTool("pg_dump"), [
+        "-F", "p", "--clean", "--if-exists", "--inserts", "--no-owner", "--no-acl"
       ], {
+        env: postgresEnvironment(connUrl),
+        windowsHide: true,
+        timeout: 120000,
         maxBuffer: 64 * 1024 * 1024 // 64 MB max buffer
       });
-
-      if (stderr && !stdout) {
-        throw new Error(stderr);
-      }
+      if (!stdout.trim()) throw new Error("Backup kosong.");
 
       return new NextResponse(stdout, {
         status: 200,
@@ -49,9 +62,7 @@ export async function GET(request: NextRequest) {
         }
       });
     } catch (error) {
-      console.error("SQL Backup failed, falling back to JSON:", error);
-      // If SQL fails, we return a 400 JSON error so the client knows it failed, 
-      // but they can download the portable JSON backup instead.
+      console.error("SQL Backup failed:", error instanceof Error ? error.name : "Unknown error");
       return NextResponse.json({ 
         error: "Gagal membuat backup SQL. Pastikan pg_dump terinstal dan dapat diakses."
       }, { status: 500 });
@@ -63,7 +74,7 @@ export async function GET(request: NextRequest) {
     const data = {
       backupMetadata: {
         exportedAt: new Date(),
-        version: "1.0.0",
+        version: "1.1.0",
         system: "ASCIT"
       },
       roles: await prisma.role.findMany(),

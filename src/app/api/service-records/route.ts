@@ -14,7 +14,7 @@ export async function GET() {
   try {
     const records = await prisma.serviceRecord.findMany({
       include: {
-        asset: true,
+        asset: { include: { unit: true, room: true } },
         createdBy: {
           select: { name: true, email: true }
         }

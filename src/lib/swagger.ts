@@ -8,7 +8,7 @@ export const apiDocumentation = {
   info: {
     title: "ASCIT - Asset Care Information Technology System API",
     description: "API untuk manajemen aset IT di RS Awal Bros Panam dengan AI Decision Support",
-    version: "1.0.0",
+    version: "1.1.0",
     contact: {
       name: "IT Department",
       email: "it@awalbrosmedia.id",

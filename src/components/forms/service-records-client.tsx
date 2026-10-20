@@ -2,6 +2,7 @@
 
 import { Activity, Clock3, Plus, Wrench, ShieldAlert } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import { useSession } from "next-auth/react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -30,6 +31,11 @@ const emptyForm = {
 
 export function ServiceRecordsClient() {
   const toast = useToast();
+  const { data: session } = useSession();
+  const canCreate = session?.user?.permissions?.includes("maintenance:create");
+  const canUpdate = session?.user?.permissions?.includes("maintenance:update");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [assetSearch, setAssetSearch] = useState("");
   const [rows, setRows] = useState<any[]>([]);
   const [assets, setAssets] = useState<any[]>([]);
   const [form, setForm] = useState(emptyForm);
@@ -40,6 +46,30 @@ export function ServiceRecordsClient() {
   const [typeFilter, setTypeFilter] = useState("ALL");
   const [statusFilter, setStatusFilter] = useState("ALL");
   const [visibleCount, setVisibleCount] = useState(10);
+  const selectedAsset = assets.find((asset) => asset.id === form.assetId)
+    || rows.find((row) => row.id === editingId)?.asset;
+  const matchingAssets = assets.filter((asset) =>
+    asset.assetCode.toLowerCase().includes(assetSearch.trim().toLowerCase())
+  );
+
+  function openForm(row?: any) {
+    setEditingId(row?.id || null);
+    setAssetSearch("");
+    setForm(row ? {
+      assetId: row.assetId,
+      type: row.type,
+      status: row.status,
+      scheduledDate: row.scheduledDate?.slice(0, 10) || "",
+      completedDate: row.completedDate?.slice(0, 10) || "",
+      technicianName: row.technicianName || "",
+      symptoms: row.symptoms || "",
+      actionTaken: row.actionTaken || "",
+      replacedComponents: row.replacedComponents || "",
+      cost: String(row.cost ?? 0),
+      notes: row.notes || ""
+    } : { ...emptyForm, scheduledDate: new Date().toISOString().slice(0, 10) });
+    setShowForm(true);
+  }
 
   async function load() {
     setLoading(true);
@@ -72,10 +102,11 @@ export function ServiceRecordsClient() {
     setSaving(true);
     try {
       const response = await fetch("/api/service-records", {
-        method: "POST",
+        method: editingId ? "PATCH" : "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           ...form,
+          ...(editingId ? { id: editingId } : {}),
           cost: parseFloat(form.cost) || 0
         })
       });
@@ -84,10 +115,12 @@ export function ServiceRecordsClient() {
         toast.push(json.error || "Gagal menyimpan service record.", "error");
         return;
       }
-      toast.push("Service record berhasil disimpan.", "success");
+      toast.push(editingId ? "Service record berhasil diperbarui." : "Service record berhasil disimpan.", "success");
       setShowForm(false);
       setForm(emptyForm);
       await load();
+    } catch {
+      toast.push("Gagal menyimpan service record. Silakan coba lagi.", "error");
     } finally {
       setSaving(false);
     }
@@ -130,10 +163,10 @@ export function ServiceRecordsClient() {
         title="Service Records"
         description="Kelola jadwal pemeliharaan berkala (Preventive) dan riwayat perbaikan kerusakan (Corrective) aset IT dalam satu tempat."
         actions={
-          <Button type="button" onClick={() => setShowForm(true)}>
+          canCreate ? <Button type="button" onClick={() => openForm()}>
             <Plus className="h-4 w-4" />
             Tambah Record
-          </Button>
+          </Button> : null
         }
       />
 
@@ -149,21 +182,37 @@ export function ServiceRecordsClient() {
       )}
 
       {showForm ? (
-        <Modal title="Form Service Record" onClose={() => setShowForm(false)}>
+        <Modal title={editingId ? "Edit Service Record" : "Form Service Record"} onClose={() => setShowForm(false)}>
           <form onSubmit={submit} className="grid gap-4">
             <div className="grid gap-4 md:grid-cols-2">
-              <Field label="Aset">
+              {!editingId && <Field label="Cari Kode Aset">
+                <Input placeholder="Ketik kode aset..." value={assetSearch} onChange={(event) => {
+                  setAssetSearch(event.target.value);
+                  setForm((prev) => ({ ...prev, assetId: "" }));
+                }} />
+              </Field>}
+              <Field label="Kode Aset">
+                {editingId ? <Input value={selectedAsset?.assetCode || "-"} readOnly /> : (
                 <Select value={form.assetId} onChange={(event) => setForm((prev) => ({ ...prev, assetId: event.target.value }))} required>
-                  <option value="">Pilih aset</option>
-                  {assets.map((asset) => (
+                  <option value="">{matchingAssets.length ? "Pilih kode aset" : "Kode aset tidak ditemukan"}</option>
+                  {matchingAssets.map((asset) => (
                     <option key={asset.id} value={asset.id}>
-                      {asset.assetCode} - {asset.assetName}
+                      {asset.assetCode}
                     </option>
                   ))}
-                </Select>
+                </Select>)}
               </Field>
+              {selectedAsset && <>
+                <div className={editingId ? "min-w-0" : "min-w-0 md:col-span-2"}>
+                  <AssetDetail label="Nama Barang" value={selectedAsset.assetName} />
+                </div>
+                <AssetDetail label="Nama Unit" value={selectedAsset.unit?.name || "Belum ditentukan"} />
+                <AssetDetail label="Nama Ruangan" value={selectedAsset.room?.name || "Belum ditentukan"} />
+              </>}
+            </div>
+            <div className="grid gap-4 border-t border-slate-200 pt-4 md:grid-cols-2">
               <Field label="Jenis (Type)">
-                <Select value={form.type} onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))} required>
+                <Select value={form.type} onChange={(event) => setForm((prev) => ({ ...prev, type: event.target.value }))} required disabled={!!editingId}>
                   <option value="PREVENTIVE">PREVENTIVE (Pemeliharaan Berkala)</option>
                   <option value="CORRECTIVE">CORRECTIVE (Perbaikan Kerusakan)</option>
                 </Select>
@@ -176,9 +225,9 @@ export function ServiceRecordsClient() {
                   <option value="DIBATALKAN">DIBATALKAN</option>
                 </Select>
               </Field>
-              <Field label="Teknisi Pelaksana">
+              <div className="md:col-span-2"><Field label="Teknisi Pelaksana">
                 <Input type="text" placeholder="Nama teknisi" value={form.technicianName} onChange={(event) => setForm((prev) => ({ ...prev, technicianName: event.target.value }))} />
-              </Field>
+              </Field></div>
               <Field label="Tanggal Dijadwalkan">
                 <Input type="date" value={form.scheduledDate} onChange={(event) => setForm((prev) => ({ ...prev, scheduledDate: event.target.value }))} />
               </Field>
@@ -188,9 +237,9 @@ export function ServiceRecordsClient() {
             </div>
 
             {form.type === "CORRECTIVE" && (
-              <div className="grid gap-4 md:grid-cols-2 bg-red-50/50 p-4 rounded-xl border border-red-100">
+              <div className="grid gap-4 md:grid-cols-2 border-t border-slate-200 pt-4">
                 <div className="md:col-span-2">
-                  <span className="text-xs font-bold text-red-700 uppercase tracking-widest mb-2 block">Informasi Kerusakan (Corrective)</span>
+                  <span className="text-sm font-semibold text-slate-800">Detail Perbaikan</span>
                 </div>
                 <Field label="Gejala / Keluhan">
                   <Textarea value={form.symptoms} onChange={(event) => setForm((prev) => ({ ...prev, symptoms: event.target.value }))} placeholder="Jelaskan kendala atau keluhan..." />
@@ -198,13 +247,13 @@ export function ServiceRecordsClient() {
                 <Field label="Tindakan Perbaikan">
                   <Textarea value={form.actionTaken} onChange={(event) => setForm((prev) => ({ ...prev, actionTaken: event.target.value }))} placeholder="Langkah perbaikan yang dilakukan..." />
                 </Field>
-                <Field label="Komponen Diganti">
+                <div className="md:col-span-2"><Field label="Komponen Diganti">
                   <Input type="text" value={form.replacedComponents} onChange={(event) => setForm((prev) => ({ ...prev, replacedComponents: event.target.value }))} placeholder="RAM, HDD, Keyboard..." />
-                </Field>
+                </Field></div>
               </div>
             )}
 
-            <div className="grid gap-4 md:grid-cols-2 border-t pt-4">
+            <div className="grid items-start gap-4 md:grid-cols-2 border-t pt-4">
                <Field label="Total Biaya (Rp)">
                 <Input type="number" min="0" value={form.cost} onChange={(event) => setForm((prev) => ({ ...prev, cost: event.target.value }))} />
               </Field>
@@ -268,7 +317,7 @@ export function ServiceRecordsClient() {
           {!loading && filteredRows.length > 0 && (
             <div className="grid gap-3">
               {filteredRows.slice(0, visibleCount).map((row) => (
-                <ServiceRecordItem key={row.id} row={row} />
+                <ServiceRecordItem key={row.id} row={row} onEdit={canUpdate ? () => openForm(row) : undefined} />
               ))}
             </div>
           )}
@@ -285,7 +334,16 @@ export function ServiceRecordsClient() {
   );
 }
 
-function ServiceRecordItem({ row }: { row: any }) {
+function AssetDetail({ label, value }: { label: string; value: string }) {
+  return (
+    <dl className="grid min-w-0 content-start gap-1.5" aria-live="polite">
+      <dt className="text-[13px] font-medium text-slate-700">{label}</dt>
+      <dd className="min-h-10 min-w-0 break-words rounded-md border border-slate-200 bg-slate-50 px-3.5 py-2 text-sm leading-6 text-slate-800">{value}</dd>
+    </dl>
+  );
+}
+
+function ServiceRecordItem({ row, onEdit }: { row: any; onEdit?: () => void }) {
   const isCorrective = row.type === "CORRECTIVE";
   return (
     <article className="grid max-w-full gap-3 overflow-hidden rounded-md border bg-white p-4 shadow-panel">
@@ -307,6 +365,7 @@ function ServiceRecordItem({ row }: { row: any }) {
              Teknisi: {row.technicianName || "-"} | Biaya: Rp {Number(row.cost).toLocaleString("id-ID")}
           </div>
         </div>
+        {onEdit && <Button type="button" variant="outline" onClick={onEdit}>Edit Record</Button>}
       </div>
       <div className="mt-2 grid gap-3 md:grid-cols-2 rounded-md border bg-slate-50 p-3">
          {isCorrective ? (
@@ -327,6 +386,7 @@ function ServiceRecordItem({ row }: { row: any }) {
            </div>
          )}
       </div>
+      {isCorrective && row.notes && <p className="text-sm text-slate-700"><strong>Catatan:</strong> {row.notes}</p>}
     </article>
   );
 }

@@ -1,0 +1,52 @@
+
+=============================== Coverage summary ===============================
+Statements   : 4.66% ( 135/2892 )
+Branches     : 4.47% ( 103/2301 )
+Functions    : 6.61% ( 25/378 )
+Lines        : 4.63% ( 119/2568 )
+================================================================================
+
+PASS src/__tests__/error-handler.spec.ts
+  Error Handler
+    ApiError class
+      √ should create error with correct properties (4 ms)
+      √ should convert to JSON correctly (2 ms)
+    ApiErrors factory
+      √ should create bad request error (1 ms)
+      √ should create unauthorized error (1 ms)
+      √ should create not found error (7 ms)
+      √ should create conflict error (1 ms)
+      √ should create validation error
+    handleApiError
+      √ should handle custom ApiError (1 ms)
+      √ should handle Prisma P2025 error (not found) (1 ms)
+      √ should handle Prisma P2002 error (unique constraint) (1 ms)
+      √ should handle Zod validation errors
+      √ should handle generic errors
+
+PASS src/__tests__/scoring-engine.spec.ts
+  AI scoring engine
+    √ mengakumulasi faktor risiko sebelum batas skor tercapai (5 ms)
+    √ membatasi skor gabungan yang melebihi 100 menjadi 100 (2 ms)
+    √ tidak menganggap garansi yang kosong sebagai kedaluwarsa
+    √ menambahkan faktor risiko hanya untuk garansi yang benar-benar kedaluwarsa (1 ms)
+    √ tidak menambah risiko untuk garansi aktif
+    √ tidak salah menandai prosesor Intel lima digit sebagai generasi lama (1 ms)
+    √ menerapkan ambang mode AI secara konsisten (1 ms)
+    √ menandai tanggal pembelian tidak valid sebagai masalah kualitas data
+
+PASS src/__tests__/rate-limit.spec.ts
+  in-memory rate limiter
+    √ menolak permintaan setelah batas tercapai (2 ms)
+    √ dapat mereset bucket setelah login berhasil
+
+Jest: "global" coverage threshold for statements (60%) not met: 4.66%
+Jest: "global" coverage threshold for branches (60%) not met: 4.47%
+Jest: "global" coverage threshold for lines (60%) not met: 4.63%
+Jest: "global" coverage threshold for functions (60%) not met: 6.61%
+Test Suites: 3 passed, 3 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        10.871 s
+Ran all test suites within paths "src/__tests__/error-handler.spec.ts", "src/__tests__/scoring-engine.spec.ts", "src/__tests__/rate-limit.spec.ts".
+Test results written to: docs\bukti-pengujian-kp\jest-lampiran-b.json

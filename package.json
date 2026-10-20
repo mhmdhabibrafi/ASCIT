@@ -1,6 +1,6 @@
 {
   "name": "ascit",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "private": true,
   "description": "ASCIT - Asset Care Information Technology System",
   "scripts": {
@@ -20,6 +20,9 @@
     "test:coverage": "jest --coverage",
     "local": "node scripts/local.mjs dev",
     "local:production": "node scripts/local.mjs start",
+    "updater:setup": "node scripts/updater/setup.mjs",
+    "updater:start": "node .local/updater/engine/worker.mjs .local/updater",
+    "updater:test": "node --test scripts/updater/core.test.mjs scripts/updater/extract.test.mjs",
     "db:setup": "node scripts/local.mjs setup",
     "db:status": "node scripts/local.mjs status",
     "db:health": "node scripts/db-health.mjs",

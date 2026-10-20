@@ -596,7 +596,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             >
               GitHub Issues
             </a>
-            <span><b>{systemBrand.name}</b> v1.0.0</span>
+            <span><b>{systemBrand.name}</b> v1.1.0</span>
           </div>
         </footer>
       </main>

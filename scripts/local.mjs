@@ -74,7 +74,9 @@ async function setup({ generateClient = false } = {}) {
     console.log("[prisma] Client sudah tersedia; generate dilewati agar aman saat aplikasi lain masih memakai DLL.");
   }
   await run(process.execPath, ["node_modules/prisma/build/index.js", "migrate", "deploy"]);
-  await run(process.execPath, ["node_modules/tsx/dist/cli.mjs", "prisma/seed.ts"]);
+  if (!process.argv.includes("--skip-seed")) {
+    await run(process.execPath, ["node_modules/tsx/dist/cli.mjs", "prisma/seed.ts"]);
+  }
   await run(process.execPath, ["scripts/db-health.mjs"]);
 }
 

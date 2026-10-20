@@ -159,7 +159,7 @@ export default async function PublicAssetPage({ params }: { params: Promise<{ to
             <span className="font-bold text-emerald-700">{hospitalBrand.name}</span>. All rights reserved.
           </div>
           <div className="font-medium text-slate-400">
-            <b className="text-slate-600">{systemBrand.name}</b> v1.0.0
+            <b className="text-slate-600">{systemBrand.name}</b> v1.1.0
           </div>
         </div>
       </footer>

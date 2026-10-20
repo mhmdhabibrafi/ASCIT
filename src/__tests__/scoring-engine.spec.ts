@@ -20,6 +20,34 @@ const baseAsset: ScoringAsset = {
 };
 
 describe("AI scoring engine", () => {
+  it("mengakumulasi faktor risiko sebelum batas skor tercapai", () => {
+    const result = scoreAsset({ ...baseAsset, ram: "4 GB", storage: "1 TB HDD", warrantyEndDate: new Date("2020-01-01") });
+
+    expect(result.score).toBe(45);
+    expect(result.details.map((detail) => [detail.factor, detail.scoreImpact])).toEqual([
+      ["RAM", 20], ["Storage", 15], ["Garansi", 10]
+    ]);
+    expect(result.scoreStatus).toBe("PERLU_DIPANTAU");
+  });
+
+  it("membatasi skor gabungan yang melebihi 100 menjadi 100", () => {
+    const result = scoreAsset({
+      ...baseAsset,
+      purchaseDate: new Date("2010-01-01"),
+      processor: "Intel Core i5-7200U",
+      ram: "4 GB",
+      storage: "1 TB HDD",
+      warrantyEndDate: new Date("2020-01-01"),
+      conditionStatus: "RUSAK_BERAT",
+      serviceRecords: [{ cost: 1_100_000 }, { cost: 0 }, { cost: 0 }, { cost: 0 }]
+    });
+
+    expect(result.details.reduce((total, detail) => total + detail.scoreImpact, 0)).toBeGreaterThan(100);
+    expect(result.score).toBe(100);
+    expect(result.scoreStatus).toBe("PRIORITAS_PENGGANTIAN");
+    expect(result.priority).toBe("kritis");
+  });
+
   it("tidak menganggap garansi yang kosong sebagai kedaluwarsa", () => {
     const result = scoreAsset({ ...baseAsset, warrantyEndDate: null });
 

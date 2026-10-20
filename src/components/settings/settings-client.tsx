@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { DatabaseStatusPanel } from "@/components/system/database-status";
+import { UpdatePanel } from "@/components/settings/update-panel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -81,7 +82,7 @@ type SettingsResponse = {
   }>;
 };
 
-type SectionKey = "profile" | "operations" | "ai" | "security" | "backup" | "runtime";
+type SectionKey = "profile" | "operations" | "ai" | "security" | "backup" | "runtime" | "updates";
 
 const sections: Array<{ key: SectionKey; label: string; icon: typeof Settings2 }> = [
   { key: "profile", label: "Profil Sistem", icon: Settings2 },
@@ -89,7 +90,8 @@ const sections: Array<{ key: SectionKey; label: string; icon: typeof Settings2 }
   { key: "ai", label: "AI & Decision Support", icon: Bot },
   { key: "security", label: "Keamanan & Akses", icon: ShieldCheck },
   { key: "backup", label: "Backup, Import & Database", icon: Database },
-  { key: "runtime", label: "Runtime", icon: ServerCog }
+  { key: "runtime", label: "Runtime", icon: ServerCog },
+  { key: "updates", label: "Pembaruan Sistem", icon: RefreshCw }
 ];
 
 function cloneSettings(settings: SystemSettings) {
@@ -285,6 +287,7 @@ export function SettingsClient() {
           ) : null}
           {active === "backup" ? <BackupSection draft={draft} /> : null}
           {active === "runtime" ? <RuntimeSection data={data} /> : null}
+          {active === "updates" ? <UpdatePanel /> : null}
         </div>
       </section>
     </PageStack>
@@ -489,6 +492,45 @@ function BackupSection({ draft }: { draft: SystemSettings }) {
   const [importing, setImporting] = useState(false);
   const [showImportConfirm, setShowImportConfirm] = useState(false);
   const [importingSql, setImportingSql] = useState(false);
+  const [downloading, setDownloading] = useState<"sql" | "json" | null>(null);
+  const [backupStatus, setBackupStatus] = useState<{ sqlReady: boolean; restoreEnabled: boolean; restoreReady: boolean } | null>(null);
+  const [backupStatusError, setBackupStatusError] = useState("");
+
+  useEffect(() => {
+    let active = true;
+    fetch("/api/settings/backup?format=status", { cache: "no-store" })
+      .then(async (response) => {
+        if (!response.ok) throw new Error(response.status === 403 ? "Fitur backup hanya tersedia untuk administrator sistem." : "Status backup belum dapat dimuat.");
+        const status = await response.json();
+        if (active) setBackupStatus(status);
+      })
+      .catch((error) => { if (active) setBackupStatusError(error.message); });
+    return () => { active = false; };
+  }, []);
+
+  const downloadBackup = async (format: "sql" | "json") => {
+    setDownloading(format);
+    try {
+      const response = await fetch(`/api/settings/backup?format=${format}`, { cache: "no-store" });
+      if (!response.ok) {
+        const result = await response.json().catch(() => ({}));
+        throw new Error(result.error || "Backup gagal dibuat.");
+      }
+      const blob = await response.blob();
+      if (!blob.size) throw new Error("File backup kosong.");
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = response.headers.get("Content-Disposition")?.match(/filename="?([^";]+)"?/)?.[1] || `ascit_backup.${format}`;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 1000);
+      toast.push("File backup berhasil dibuat dan unduhan dimulai.", "success");
+    } catch (error) {
+      toast.push(error instanceof Error ? error.message : "Backup gagal dibuat.", "error");
+    } finally { setDownloading(null); }
+  };
 
   const handleImportFile = async (file?: File) => {
     setImportBackup(null);
@@ -583,18 +625,15 @@ function BackupSection({ draft }: { draft: SystemSettings }) {
                 Database Backup (.SQL)
               </div>
               <p className="mt-2 text-sm leading-5 text-muted-foreground">
-                Menggunakan PostgreSQL pg_dump untuk mengunduh file SQL lengkap dengan struktur tabel (DDL) dan data (INSERT). Kompatibel penuh untuk pemulihan langsung di pgAdmin/pgweb.
+                Cadangan lengkap struktur dan isi database, termasuk akun dan riwayat layanan. Simpan file ini di tempat yang aman.
               </p>
+              <p className="mt-2 text-xs text-slate-600">{backupStatusError || (!backupStatus ? "Memeriksa kesiapan backup..." : backupStatus.sqlReady ? "Backup SQL siap digunakan." : "Alat backup PostgreSQL belum tersedia di server.")}</p>
             </div>
             <div className="mt-4">
-              <a
-                href="/api/settings/backup?format=sql"
-                download
-                className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 text-sm font-bold text-white shadow transition hover:bg-emerald-800"
-              >
+              <Button type="button" disabled={!backupStatus?.sqlReady || !!downloading} onClick={() => void downloadBackup("sql")}>
                 <Download className="h-4 w-4" />
-                Unduh SQL Backup
-              </a>
+                {downloading === "sql" ? "Membuat Backup..." : "Unduh SQL Backup"}
+              </Button>
             </div>
           </div>
           <div className="flex flex-col justify-between rounded-md border border-amber-200 bg-amber-50 p-4">
@@ -603,11 +642,12 @@ function BackupSection({ draft }: { draft: SystemSettings }) {
               <p className="mt-2 text-sm leading-5 text-amber-900">
                 Mengganti database aktif dari file SQL. Gunakan hanya setelah menyimpan backup terbaru.
               </p>
+              <p className="mt-2 text-xs text-amber-900">{!backupStatus ? "Memeriksa konfigurasi restore..." : !backupStatus.restoreEnabled ? "Restore melalui web dinonaktifkan pada server ini." : !backupStatus.restoreReady ? "Alat pemulihan PostgreSQL belum tersedia." : "Restore SQL tersedia untuk administrator."}</p>
             </div>
             <div className="mt-4">
-              <label className="inline-flex h-9 w-fit cursor-pointer items-center justify-center gap-2 rounded-md border border-amber-300 bg-white px-4 text-sm font-bold text-amber-800 hover:bg-amber-100">
+              <label className={cn("inline-flex h-9 w-fit items-center justify-center gap-2 rounded-md border border-amber-300 bg-white px-4 text-sm font-bold text-amber-800", backupStatus?.restoreReady ? "cursor-pointer hover:bg-amber-100" : "cursor-not-allowed opacity-50")}>
                 <Upload className="h-4 w-4" /> {importingSql ? "Memulihkan..." : "Pilih File SQL"}
-                <input type="file" accept=".sql,application/sql" className="sr-only" disabled={importingSql} onChange={(event) => void handleSqlImport(event.target.files?.[0])} />
+                <input type="file" accept=".sql,application/sql" className="sr-only" disabled={importingSql || !backupStatus?.restoreReady} onChange={(event) => void handleSqlImport(event.target.files?.[0])} />
               </label>
             </div>
           </div>
@@ -635,18 +675,14 @@ function BackupSection({ draft }: { draft: SystemSettings }) {
                 Portable Data Export (.JSON)
               </div>
               <p className="mt-2 text-sm leading-5 text-muted-foreground">
-                Ekspor seluruh data dari semua tabel sistem ke format JSON portable terstruktur. Berguna sebagai arsip data ringan, audit kepatuhan, atau impor offline.
+                Ekspor data aset, master data, layanan, dan pengaturan untuk impor portable. Tidak mencakup password akun; audit log dibatasi 500 entri terbaru. Gunakan SQL untuk backup lengkap.
               </p>
             </div>
             <div className="mt-4">
-              <a
-                href="/api/settings/backup?format=json"
-                download
-                className="inline-flex h-9 items-center justify-center gap-2 rounded-md bg-emerald-700 px-4 text-sm font-bold text-white shadow transition hover:bg-emerald-800"
-              >
+              <Button type="button" disabled={!backupStatus || !!downloading} onClick={() => void downloadBackup("json")}>
                 <Download className="h-4 w-4" />
-                Unduh JSON Portable
-              </a>
+                {downloading === "json" ? "Membuat Ekspor..." : "Unduh JSON Portable"}
+              </Button>
             </div>
           </div>
         </CardContent>

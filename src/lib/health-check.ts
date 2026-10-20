@@ -118,7 +118,7 @@ class HealthCheckService {
       status,
       timestamp: new Date().toISOString(),
       uptime: Date.now() - this.startTime,
-      version: "1.0.0",
+      version: "1.1.0",
       checks,
       metrics: {
         cacheStats: cache.getStats(),

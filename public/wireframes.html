@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Balsamiq Wireframe - ASCIT RS Awal Bros</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Balsamiq+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --font-balsamiq: 'Balsamiq Sans', 'Comic Sans MS', cursive, sans-serif;
+      --sketch-border: 2px solid #1a1a1a;
+      --sketch-shadow: 3px 3px 0px rgba(0,0,0,0.15);
+      --bg-hatch: repeating-linear-gradient(
+        -45deg,
+        #e2e2e2,
+        #e2e2e2 3px,
+        #f5f5f5 3px,
+        #f5f5f5 8px
+      );
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-balsamiq);
+      background-color: #f0f0ee;
+      color: #111;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    /* Top control bar for switching wireframes */
+    .wireframe-nav {
+      background: #fff;
+      border: var(--sketch-border);
+      border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+      padding: 12px 20px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--sketch-shadow);
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .nav-label {
+      font-weight: 700;
+      font-size: 16px;
+      margin-right: 8px;
+    }
+
+    .nav-btn {
+      font-family: var(--font-balsamiq);
+      font-size: 15px;
+      font-weight: 700;
+      padding: 8px 18px;
+      background: #fff;
+      border: var(--sketch-border);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .nav-btn:hover {
+      background: #eee;
+    }
+
+    .nav-btn.active {
+      background: var(--bg-hatch);
+      border-width: 2.5px;
+      box-shadow: 2px 2px 0px #000;
+    }
+
+    /* Screen containers */
+    .screen-view {
+      display: none;
+      width: 100%;
+      max-width: 1060px;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .screen-view.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Balsamiq container frame */
+    .balsamiq-window {
+      background: #ffffff;
+      border: 3px solid #1a1a1a;
+      border-radius: 255px 25px 225px 25px/25px 225px 25px 255px;
+      padding: 30px;
+      box-shadow: 6px 6px 0px rgba(0,0,0,0.25);
+      position: relative;
+    }
+
+    /* Hand-drawn sketch inputs & buttons */
+    .sketch-box {
+      border: var(--sketch-border);
+      border-radius: 10px;
+      padding: 10px 14px;
+      background: #fff;
+      font-family: var(--font-balsamiq);
+      font-size: 15px;
+      outline: none;
+      width: 100%;
+    }
+
+    .sketch-btn {
+      font-family: var(--font-balsamiq);
+      border: var(--sketch-border);
+      border-radius: 8px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: 700;
+      background: var(--bg-hatch);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      box-shadow: 2px 2px 0px #222;
+    }
+
+    .sketch-btn:hover {
+      filter: brightness(0.95);
+    }
+
+    .sketch-card {
+      border: var(--sketch-border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+      box-shadow: 3px 3px 0px rgba(0,0,0,0.1);
+    }
+
+    /* LOGIN SCREEN STYLES */
+    .login-container {
+      max-width: 440px;
+      margin: 40px auto;
+      text-align: center;
+    }
+
+    .login-logo-title {
+      font-size: 32px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+    }
+
+    .login-sub-title {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .login-desc {
+      font-size: 13px;
+      color: #333;
+      margin-bottom: 28px;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .password-wrapper {
+      position: relative;
+    }
+
+    .password-toggle {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      font-size: 18px;
+      user-select: none;
+    }
+
+    .login-footer {
+      margin-top: 30px;
+      font-size: 13px;
+      color: #555;
+    }
+
+    /* DASHBOARD STYLES */
+    .dash-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: var(--sketch-border);
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .dash-title-group h1 {
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .dash-title-group h2 {
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .dash-title-group p {
+      font-size: 13px;
+      color: #444;
+    }
+
+    .dash-user-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .dash-tabs {
+      display: flex;
+      gap: 8px;
+      border-bottom: var(--sketch-border);
+      padding-bottom: 0;
+      margin-bottom: 24px;
+      overflow-x: auto;
+    }
+
+    .dash-tab-item {
+      padding: 8px 18px;
+      font-weight: 700;
+      border: var(--sketch-border);
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      background: #fafafa;
+      cursor: pointer;
+    }
+
+    .dash-tab-item.active {
+      background: #fff;
+      border-bottom: 2px solid #fff;
+      margin-bottom: -2px;
+      padding-top: 10px;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-card {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .kpi-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #444;
+      margin-bottom: 6px;
+    }
+
+    .kpi-value {
+      font-size: 34px;
+      font-weight: 700;
+      line-height: 1;
+    }
+
+    .kpi-icon {
+      font-size: 30px;
+      opacity: 0.8;
+    }
+
+    .dash-main-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin-bottom: 20px;
+    }
+
+    @media (max-width: 850px) {
+      .dash-main-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Sketched Bar Chart */
+    .chart-container {
+      height: 250px;
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+      padding-top: 30px;
+      border-bottom: var(--sketch-border);
+      border-left: var(--sketch-border);
+      position: relative;
+    }
+
+    .chart-y-axis {
+      position: absolute;
+      left: -40px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .chart-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      height: 100%;
+      justify-content: flex-end;
+    }
+
+    .chart-bar {
+      width: 80%;
+      border: var(--sketch-border);
+      border-bottom: none;
+      background: var(--bg-hatch);
+      transition: height 0.3s;
+    }
+
+    .chart-label {
+      font-size: 12px;
+      font-weight: 700;
+      margin-top: 8px;
+    }
+
+    /* Sketched Table */
+    .sketch-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+
+    .sketch-table th {
+      border: var(--sketch-border);
+      background: #e8e8e8;
+      padding: 8px;
+      text-align: left;
+      font-weight: 700;
+    }
+
+    .sketch-table td {
+      border: var(--sketch-border);
+      padding: 8px;
+    }
+
+    .btn-sm {
+      padding: 4px 10px;
+      font-size: 12px;
+      font-weight: 700;
+      border: var(--sketch-border);
+      border-radius: 6px;
+      background: #fff;
+      cursor: pointer;
+    }
+
+    .btn-sm.hatch {
+      background: var(--bg-hatch);
+    }
+
+    /* Image Preview Gallery mode */
+    .image-preview-wrapper {
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .image-preview-wrapper img {
+      max-width: 100%;
+      border: 3px solid #1a1a1a;
+      border-radius: 12px;
+      box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Switcher Toolbar -->
+  <div class="wireframe-nav">
+    <span class="nav-label">📐 Pilih Tampilan Wireframe:</span>
+    <button class="nav-btn active" onclick="switchView('view-dashboard', this)">1. Dashboard Utama</button>
+    <button class="nav-btn" onclick="switchView('view-login', this)">2. Halaman Login</button>
+    <button class="nav-btn" onclick="switchView('view-asset-detail', this)">3. Detail & Cetak QR Aset</button>
+    <button class="nav-btn" onclick="switchView('view-images', this)">🖼️ Wireframe Image Showcase</button>
+  </div>
+
+  <!-- VIEW 1: DASHBOARD -->
+  <div id="view-dashboard" class="screen-view active">
+    <div class="balsamiq-window">
+      <!-- Header -->
+      <div class="dash-header">
+        <div class="dash-title-group">
+          <h1>RS AWAL BROS</h1>
+          <h2>ASCIT - Dashboard</h2>
+          <p>Asset Care Information Technology System</p>
+        </div>
+        <div class="dash-user-actions">
+          <span style="font-size: 20px;">👤 Admin IT</span>
+          <button class="sketch-btn" onclick="switchView('view-login', document.querySelectorAll('.nav-btn')[1])">
+            ➜] Keluar ke Login
+          </button>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="dash-tabs">
+        <div class="dash-tab-item active">[ Dashboard ]</div>
+        <div class="dash-tab-item" onclick="switchView('view-asset-detail', document.querySelectorAll('.nav-btn')[2])">[ Data Aset ]</div>
+        <div class="dash-tab-item">[ Scan QR ]</div>
+        <div class="dash-tab-item">[ Riwayat Servis ]</div>
+        <div class="dash-tab-item">[ Rekomendasi AI ]</div>
+        <div class="dash-tab-item">[ Laporan ]</div>
+      </div>
+
+      <!-- Metric KPI Cards -->
+      <div class="kpi-grid">
+        <div class="sketch-card kpi-card">
+          <div>
+            <div class="kpi-title">Total Aset</div>
+            <div class="kpi-value">2,543</div>
+          </div>
+          <div class="kpi-icon">🔧</div>
+        </div>
+        <div class="sketch-card kpi-card">
+          <div>
+            <div class="kpi-title">Aset Beroperasi</div>
+            <div class="kpi-value">2,310</div>
+          </div>
+          <div class="kpi-icon">✅</div>
+        </div>
+        <div class="sketch-card kpi-card">
+          <div>
+            <div class="kpi-title">Dalam Perbaikan</div>
+            <div class="kpi-value">185</div>
+          </div>
+          <div class="kpi-icon">⚠️</div>
+        </div>
+        <div class="sketch-card kpi-card">
+          <div>
+            <div class="kpi-title">Jadwal Servis</div>
+            <div class="kpi-value">48</div>
+          </div>
+          <div class="kpi-icon">📅</div>
+        </div>
+      </div>
+
+      <!-- Main Content Grid -->
+      <div class="dash-main-grid">
+        <!-- Left: Hand-drawn Bar Chart -->
+        <div class="sketch-card">
+          <h3 style="margin-bottom: 12px; font-size: 16px;">📊 Distribusi Aset per Departemen</h3>
+          <div class="chart-container">
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 65%;"></div>
+              <div class="chart-label">UGD (195)</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 90%;"></div>
+              <div class="chart-label">ICU (260)</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 75%;"></div>
+              <div class="chart-label">Poli (220)</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 35%;"></div>
+              <div class="chart-label">Farmasi (85)</div>
+            </div>
+            <div class="chart-bar-col">
+              <div class="chart-bar" style="height: 48%;"></div>
+              <div class="chart-label">Radiologi (125)</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Recent Maintenance / Alerts -->
+        <div class="sketch-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 8px;">
+            <h3 style="font-size: 16px;">⚠️ Peringatan Pemeliharaan Terdekat</h3>
+            <button class="btn-sm hatch">+ Input Servis</button>
+          </div>
+          <table class="sketch-table">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nama Aset</th>
+                <th>Lokasi</th>
+                <th>Status</th>
+                <th>Tindakan</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td>Patient Monitor B-40</td>
+                <td>ICU Lt. 2</td>
+                <td>Perlu Kalibrasi</td>
+                <td>
+                  <button class="btn-sm hatch">Servis</button>
+                  <button class="btn-sm">Lihat</button>
+                </td>
+              </tr>
+              <tr>
+                <td>2</td>
+                <td>Defibrillator Primedic</td>
+                <td>UGD Bed 1</td>
+                <td>Baterai Lemah</td>
+                <td>
+                  <button class="btn-sm hatch">Servis</button>
+                  <button class="btn-sm">Lihat</button>
+                </td>
+              </tr>
+              <tr>
+                <td>3</td>
+                <td>USG Portable Mindray</td>
+                <td>Poli Kandungan</td>
+                <td>Jadwal Servis</td>
+                <td>
+                  <button class="btn-sm hatch">Servis</button>
+                  <button class="btn-sm">Lihat</button>
+                </td>
+              </tr>
+              <tr>
+                <td>4</td>
+                <td>Infusion Pump Terumo</td>
+                <td>Rawat Inap 302</td>
+                <td>Sensor Error</td>
+                <td>
+                  <button class="btn-sm hatch">Servis</button>
+                  <button class="btn-sm">Lihat</button>
+                </td>
+              </tr>
+              <tr>
+                <td>5</td>
+                <td>Mobile X-Ray Unit</td>
+                <td>Radiologi</td>
+                <td>Rutin Bulanan</td>
+                <td>
+                  <button class="btn-sm hatch">Servis</button>
+                  <button class="btn-sm">Lihat</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div style="text-align: center; border-top: var(--sketch-border); padding-top: 14px; font-size: 13px;">
+        © 2026 ASCIT - RS AWAL BROS
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: LOGIN SCREEN -->
+  <div id="view-login" class="screen-view">
+    <div class="balsamiq-window login-container">
+      <h1 class="login-logo-title">RS AWAL BROS</h1>
+      <h2 class="login-sub-title">ASCIT</h2>
+      <p class="login-desc">Asset Care Information Technology System</p>
+
+      <form onsubmit="event.preventDefault(); switchView('view-dashboard', document.querySelectorAll('.nav-btn')[0]);">
+        <div class="form-group">
+          <label class="form-label">Username</label>
+          <input type="text" class="sketch-box" value="admin" placeholder="Masukkan username">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <div class="password-wrapper">
+            <input type="password" id="loginPassword" class="sketch-box" value="secretpass" style="padding-right: 40px;">
+            <span class="password-toggle" onclick="togglePass()">👁️</span>
+          </div>
+        </div>
+
+        <button type="submit" class="sketch-btn" style="width: 100%; margin-top: 10px;">
+          ➜] Login ke Sistem
+        </button>
+      </form>
+
+      <div class="login-footer">
+        © 2026 ASCIT
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 3: ASSET DETAIL & QR -->
+  <div id="view-asset-detail" class="screen-view">
+    <div class="balsamiq-window">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: var(--sketch-border); padding-bottom: 14px; margin-bottom: 20px;">
+        <div>
+          <h2>📄 Detail Aset & Label QR Code</h2>
+          <p style="font-size: 13px; color: #444;">Kode: <strong>AST-ICU-2024-0089</strong></p>
+        </div>
+        <button class="sketch-btn" onclick="switchView('view-dashboard', document.querySelectorAll('.nav-btn')[0])">
+          ⬅ Kembali ke Dashboard
+        </button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+        <!-- Left: Form Info -->
+        <div class="sketch-card">
+          <h3 style="margin-bottom: 14px;">Spesifikasi Perangkat Medis</h3>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 14px;">
+            <div>
+              <strong>Nama Aset:</strong>
+              <div class="sketch-box" style="margin-top: 4px;">Patient Monitor 7 Parameter</div>
+            </div>
+            <div>
+              <strong>Kategori:</strong>
+              <div class="sketch-box" style="margin-top: 4px;">Peralatan Medis Kritis</div>
+            </div>
+            <div>
+              <strong>Departemen / Ruang:</strong>
+              <div class="sketch-box" style="margin-top: 4px;">ICU (Intensive Care Unit) Lt. 2</div>
+            </div>
+            <div>
+              <strong>Tanggal Pembelian:</strong>
+              <div class="sketch-box" style="margin-top: 4px;">12 Januari 2023</div>
+            </div>
+            <div>
+              <strong>Status Kondisi:</strong>
+              <div class="sketch-box" style="margin-top: 4px; background: #e8ffe8;">Baik (Operational)</div>
+            </div>
+            <div>
+              <strong>Jadwal Kalibrasi Berikutnya:</strong>
+              <div class="sketch-box" style="margin-top: 4px; background: #fff2d6;">15 Oktober 2026</div>
+            </div>
+          </div>
+
+          <div style="margin-top: 18px; display: flex; gap: 10px;">
+            <button class="sketch-btn">✏️ Edit Data</button>
+            <button class="sketch-btn">🔧 Input Maintenance</button>
+            <button class="sketch-btn" style="background:#fff;">📋 Lihat Riwayat Servis</button>
+          </div>
+        </div>
+
+        <!-- Right: QR Code Card -->
+        <div class="sketch-card" style="text-align: center;">
+          <h3 style="margin-bottom: 12px;">Label QR Code Aset</h3>
+          <!-- Balsamiq hand-drawn QR placeholder -->
+          <div style="width: 170px; height: 170px; margin: 0 auto 12px; border: var(--sketch-border); display: flex; flex-direction: column; align-items: center; justify-content: center; background: #fafafa; border-radius: 8px;">
+            <div style="font-size: 48px;">🏁</div>
+            <div style="font-size: 11px; font-weight: 700; margin-top: 4px;">[QR CODE MOCKUP]</div>
+          </div>
+          <div style="font-size: 14px; font-weight: 700;">AST-ICU-2024-0089</div>
+          <p style="font-size: 12px; color: #555; margin-bottom: 14px;">RS Awal Bros - ASCIT System</p>
+          <button class="sketch-btn" style="width: 100%;">🖨️ Cetak Stiker QR</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 4: IMAGE GALLERY SHOWCASE -->
+  <div id="view-images" class="screen-view">
+    <div class="balsamiq-window">
+      <h2 style="margin-bottom: 8px;">🖼️ Galeri Wireframe Sketsa Balsamiq</h2>
+      <p style="font-size: 14px; color: #444; margin-bottom: 20px;">
+        Perbandingan wireframe Halaman Login (referensi) dan Halaman Dashboard Utama yang baru saja digenerate:
+      </p>
+
+      <div style="display: grid; grid-template-columns: 1fr 1.6fr; gap: 20px; align-items: start;">
+        <div class="sketch-card" style="text-align: center;">
+          <h3 style="margin-bottom: 8px;">1. Halaman Login (Referensi)</h3>
+          <img src="login_balsamiq_wireframe.png" alt="Login Wireframe" style="width: 100%; border: var(--sketch-border); border-radius: 8px;">
+        </div>
+
+        <div class="sketch-card" style="text-align: center;">
+          <h3 style="margin-bottom: 8px;">2. Halaman Dashboard Utama (Hasil Buatan)</h3>
+          <img src="dashboard_balsamiq_wireframe.jpg" alt="Dashboard Wireframe" style="width: 100%; border: var(--sketch-border); border-radius: 8px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function switchView(viewId, btnElement) {
+      document.querySelectorAll('.screen-view').forEach(view => {
+        view.classList.remove('active');
+      });
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        btn.classList.remove('active');
+      });
+
+      const target = document.getElementById(viewId);
+      if (target) target.classList.add('active');
+      if (btnElement) btnElement.classList.add('active');
+    }
+
+    function togglePass() {
+      const pass = document.getElementById('loginPassword');
+      if (pass.type === 'password') {
+        pass.type = 'text';
+      } else {
+        pass.type = 'password';
+      }
+    }
+  </script>
+</body>
+</html>

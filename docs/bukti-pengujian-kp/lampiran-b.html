@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="id"><head><meta charset="utf-8"><title>Lampiran B. Bukti Pengujian White Box ASCIT</title>
+<style>
+@page { size: A4 portrait; margin: 17mm 16mm 16mm 17mm; }
+* { box-sizing: border-box; }
+body { font-family: "Times New Roman", Times, serif; margin: 0; color: #161616; font-size: 11pt; line-height: 1.35; }
+.page { page-break-after: always; break-after: page; min-height: 250mm; position: relative; }
+.page:last-child { page-break-after: auto; break-after: auto; }
+h1 { font-size: 13pt; text-align: center; margin: 0 0 6mm 0; }
+h2 { font-size: 11pt; margin: 2mm 0 4mm; }
+p { margin: 0 0 3.5mm; text-align: justify; }
+.caption { font-size: 10pt; font-weight: 700; text-align: center; margin-top: 4mm; }
+.meta { margin: 4mm 0; width: 100%; border-collapse: collapse; font-size: 10pt; }
+.meta td { border: 1px solid #666; padding: 2mm; vertical-align: top; }
+.terminal { background: #181818; color: #f3f3f3; border: 1px solid #555; padding: 4mm; font: 8pt/1.22 Consolas, "Courier New", monospace; white-space: pre-wrap; overflow-wrap: anywhere; margin: 4mm 0 2mm; max-height: 133mm; overflow: hidden; }
+.note { font-size: 9.5pt; margin-top: 4mm; }
+.table { width: 100%; border-collapse: collapse; font-size: 7.5pt; line-height: 1.12; table-layout: fixed; }
+.table th, .table td { border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 0.7mm 1mm; vertical-align: top; overflow-wrap: anywhere; }
+.table th { text-align: center; background: #f1f1f1; }
+.table .no { width: 7%; text-align: center; }
+.table .status { width: 10%; text-align: center; }
+.table .source { width: 22%; font-size: 7pt; }
+.footer { position: absolute; bottom: 0; right: 0; font-size: 10pt; }
+@media screen { body { background: #eee; } .page { width: 210mm; min-height: 297mm; background: white; padding: 17mm 16mm 16mm 17mm; margin: 12px auto; box-shadow: 0 1px 8px #bbb; } .footer { right: 16mm; bottom: 14mm; } }
+</style></head><body>
+<section class="page">
+<h1>LAMPIRAN B<br>Bukti Hasil Pengujian White Box ASCIT</h1>
+<h2>B.1 Dokumentasi Hasil Pengujian Jest</h2>
+<p>Pengujian otomatis dijalankan terhadap tiga file pengujian terisolasi menggunakan Jest. Rekapitulasi ini dibentuk dari berkas JSON hasil eksekusi Jest, bukan dari status yang diisi secara manual.</p>
+<table class="meta">
+<tr><td>Tanggal eksekusi</td><td>8 Oktober 2026 pukul 12.59 WIB</td></tr>
+<tr><td>Test suite</td><td>3 PASS, 0 FAIL, 3 total</td></tr>
+<tr><td>Test case</td><td>22 PASS, 0 FAIL, 0 SKIPPED, 22 total</td></tr>
+<tr><td>File bukti</td><td>jest-lampiran-b.json dan jest-lampiran-b-aktual.txt</td></tr>
+</table>
+<p><b>Cuplikan keluaran aktual Jest:</b></p>
+<pre class="terminal">PASS src/__tests__/scoring-engine.spec.ts
+  AI scoring engine
+    √ mengakumulasi faktor risiko sebelum batas skor tercapai (5 ms)
+    √ membatasi skor gabungan yang melebihi 100 menjadi 100 (2 ms)
+    √ tidak menganggap garansi yang kosong sebagai kedaluwarsa
+    √ menambahkan faktor risiko hanya untuk garansi yang benar-benar kedaluwarsa (1 ms)
+    √ tidak menambah risiko untuk garansi aktif
+    √ tidak salah menandai prosesor Intel lima digit sebagai generasi lama (1 ms)
+    √ menerapkan ambang mode AI secara konsisten (1 ms)
+    √ menandai tanggal pembelian tidak valid sebagai masalah kualitas data
+PASS src/__tests__/rate-limit.spec.ts
+  in-memory rate limiter
+    √ menolak permintaan setelah batas tercapai (2 ms)
+    √ dapat mereset bucket setelah login berhasil
+Jest: &quot;global&quot; coverage threshold for statements (60%) not met: 4.66%
+Jest: &quot;global&quot; coverage threshold for branches (60%) not met: 4.47%
+Jest: &quot;global&quot; coverage threshold for lines (60%) not met: 4.63%
+Jest: &quot;global&quot; coverage threshold for functions (60%) not met: 6.61%
+Test Suites: 3 passed, 3 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        10.871 s
+Ran all test suites within paths &quot;src/__tests__/error-handler.spec.ts&quot;, &quot;src/__tests__/scoring-engine.spec.ts&quot;, &quot;src/__tests__/rate-limit.spec.ts&quot;.
+Test results written to: docs\bukti-pengujian-kp\jest-lampiran-b.json</pre>
+<p class="caption">Gambar B.1 Dokumentasi Hasil Pengujian White Box Menggunakan Jest</p>
+<p class="note">Catatan. Kotak di atas adalah cuplikan teks keluaran Jest yang dicatat oleh skrip, bukan foto layar terminal. Jika kampus meminta tangkapan layar asli, tampilkan file log pada terminal lalu ambil screenshot.</p>
+<div class="footer">B-1</div>
+</section>
+<section class="page">
+<h1>LAMPIRAN B<br>Bukti Hasil Pengujian White Box ASCIT</h1>
+<h2>B.2 Dokumentasi Code Coverage</h2>
+<p>Pengukuran cakupan kode dilakukan pada eksekusi Jest yang sama. Hasil branch coverage global dibandingkan dengan ambang minimal 60% yang digunakan dalam evaluasi proyek.</p>
+<table class="meta">
+<tr><td>Statement coverage</td><td>4,66%</td></tr>
+<tr><td>Branch coverage global</td><td><b>4,47%</b></td></tr>
+<tr><td>Function coverage</td><td>6,61%</td></tr>
+<tr><td>Line coverage</td><td>4,63%</td></tr>
+<tr><td>Ambang branch coverage</td><td>60%</td></tr>
+<tr><td>Evaluasi ambang</td><td><b>BELUM MEMENUHI AMBANG</b></td></tr>
+<tr><td>Sumber angka</td><td>coverage/coverage-summary.json</td></tr>
+</table>
+<p class="caption">Gambar B.2 Dokumentasi Hasil Pengukuran Code Coverage ASCIT</p>
+<p class="note">Catatan. Keberhasilan test case dan pencapaian ambang cakupan kode adalah dua hal yang berbeda. Test case yang lulus tidak membuktikan semua jalur program sudah diuji. Jika hasil cakupan tidak tersedia, halaman ini tidak memberikan klaim angka.</p>
+<p class="note">Hasil eksekusi proses Jest: exit code 1. Exit code tidak selalu menunjukkan test gagal, karena konfigurasi cakupan kode dapat menyebabkan proses keluar dengan kode gagal walaupun seluruh test case lulus.</p>
+<div class="footer">B-2</div>
+</section>
+<section class="page">
+<h1>LAMPIRAN B<br>Bukti Hasil Pengujian White Box ASCIT</h1>
+<h2>B.3 Rincian Test Case Aktual</h2>
+<p>Daftar berikut diperoleh langsung dari assertionResults yang tersimpan pada berkas JSON Jest. Jumlah skenario terdata 22 dan statusnya mengikuti hasil eksekusi aktual. Ini bukan seluruh rancangan skenario WB-01 sampai WB-71 pada Lampiran A.</p>
+<p class="caption">Tabel B.1 Rincian Hasil Pengujian White Box ASCIT</p>
+<table class="table"><thead><tr><th class="no">No.</th><th>Skenario pengujian (nama test Jest)</th><th class="status">Status</th><th class="source">File pengujian</th></tr></thead><tbody><tr><td class="no">1</td><td>Error Handler ApiError class should create error with correct properties</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">2</td><td>Error Handler ApiError class should convert to JSON correctly</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">3</td><td>Error Handler ApiErrors factory should create bad request error</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">4</td><td>Error Handler ApiErrors factory should create unauthorized error</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">5</td><td>Error Handler ApiErrors factory should create not found error</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">6</td><td>Error Handler ApiErrors factory should create conflict error</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">7</td><td>Error Handler ApiErrors factory should create validation error</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">8</td><td>Error Handler handleApiError should handle custom ApiError</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">9</td><td>Error Handler handleApiError should handle Prisma P2025 error (not found)</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">10</td><td>Error Handler handleApiError should handle Prisma P2002 error (unique constraint)</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">11</td><td>Error Handler handleApiError should handle Zod validation errors</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">12</td><td>Error Handler handleApiError should handle generic errors</td><td class="status">PASS</td><td class="source">error-handler.spec.ts</td></tr>
+<tr><td class="no">13</td><td>AI scoring engine mengakumulasi faktor risiko sebelum batas skor tercapai</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">14</td><td>AI scoring engine membatasi skor gabungan yang melebihi 100 menjadi 100</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">15</td><td>AI scoring engine tidak menganggap garansi yang kosong sebagai kedaluwarsa</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">16</td><td>AI scoring engine menambahkan faktor risiko hanya untuk garansi yang benar-benar kedaluwarsa</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">17</td><td>AI scoring engine tidak menambah risiko untuk garansi aktif</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">18</td><td>AI scoring engine tidak salah menandai prosesor Intel lima digit sebagai generasi lama</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">19</td><td>AI scoring engine menerapkan ambang mode AI secara konsisten</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">20</td><td>AI scoring engine menandai tanggal pembelian tidak valid sebagai masalah kualitas data</td><td class="status">PASS</td><td class="source">scoring-engine.spec.ts</td></tr>
+<tr><td class="no">21</td><td>in-memory rate limiter menolak permintaan setelah batas tercapai</td><td class="status">PASS</td><td class="source">rate-limit.spec.ts</td></tr>
+<tr><td class="no">22</td><td>in-memory rate limiter dapat mereset bucket setelah login berhasil</td><td class="status">PASS</td><td class="source">rate-limit.spec.ts</td></tr></tbody></table>
+<div class="footer">B-3</div>
+</section>
+</body></html>

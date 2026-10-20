@@ -5,6 +5,7 @@ import path from "node:path";
 import { spawn } from "node:child_process";
 import { hasSessionPermission, requireSession } from "@/lib/api";
 import { Permission } from "@/lib/permissions";
+import { postgresEnvironment, postgresTool } from "@/lib/postgres-client";
 
 export const dynamic = "force-dynamic";
 const MAX_SQL_BYTES = 128 * 1024 * 1024;
@@ -30,11 +31,12 @@ export async function POST(request: NextRequest) {
     await writeFile(sqlPath, Buffer.from(await file.arrayBuffer()));
     const sourceUrl = process.env.DATABASE_URL;
     if (!sourceUrl) throw new Error("DATABASE_URL belum dikonfigurasi.");
-    const restoreUrl = sourceUrl;
     await new Promise<void>((resolve, reject) => {
-      const child = spawn("psql", ["--dbname", restoreUrl, "--file", sqlPath, "--set", "ON_ERROR_STOP=1"], { stdio: ["ignore", "pipe", "pipe"] });
+      const child = spawn(postgresTool("psql"), ["--no-psqlrc", "--single-transaction", "--file", sqlPath, "--set", "ON_ERROR_STOP=1"], {
+        env: postgresEnvironment(sourceUrl), windowsHide: true, stdio: ["ignore", "ignore", "pipe"]
+      });
       let stderr = "";
-      child.stderr.on("data", (chunk) => { stderr += chunk.toString(); });
+      child.stderr.on("data", (chunk) => { stderr = (stderr + chunk.toString()).slice(-2000); });
       child.on("error", (error) => reject(error));
       child.on("close", (code) => code === 0 ? resolve() : reject(new Error(stderr.slice(-2000) || `psql gagal dengan kode ${code}`)));
     });

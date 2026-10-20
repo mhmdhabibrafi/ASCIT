@@ -1,0 +1,142 @@
+
+> ascit@1.0.0 test:coverage
+> jest --coverage --runInBand --no-cache --verbose --coverageDirectory=docs/bukti-pengujian-kp/coverage --coverageReporters=text --coverageReporters=json-summary
+
+PASS src/__tests__/error-handler.spec.ts
+  Error Handler
+    ApiError class
+      √ should create error with correct properties (6 ms)
+      √ should convert to JSON correctly (3 ms)
+    ApiErrors factory
+      √ should create bad request error (1 ms)
+      √ should create unauthorized error (1 ms)
+      √ should create not found error (1 ms)
+      √ should create conflict error
+      √ should create validation error
+    handleApiError
+      √ should handle custom ApiError (1 ms)
+      √ should handle Prisma P2025 error (not found) (1 ms)
+      √ should handle Prisma P2002 error (unique constraint) (1 ms)
+      √ should handle Zod validation errors (1 ms)
+      √ should handle generic errors (1 ms)
+
+PASS src/__tests__/scoring-engine.spec.ts
+  AI scoring engine
+    √ mengakumulasi faktor risiko sebelum batas skor tercapai (3 ms)
+    √ membatasi skor gabungan yang melebihi 100 menjadi 100 (2 ms)
+    √ tidak menganggap garansi yang kosong sebagai kedaluwarsa
+    √ menambahkan faktor risiko hanya untuk garansi yang benar-benar kedaluwarsa (1 ms)
+    √ tidak menambah risiko untuk garansi aktif
+    √ tidak salah menandai prosesor Intel lima digit sebagai generasi lama (1 ms)
+    √ menerapkan ambang mode AI secara konsisten (1 ms)
+    √ menandai tanggal pembelian tidak valid sebagai masalah kualitas data (1 ms)
+
+PASS src/__tests__/rate-limit.spec.ts
+  in-memory rate limiter
+    √ menolak permintaan setelah batas tercapai (2 ms)
+    √ dapat mereset bucket setelah login berhasil (1 ms)
+
+-------------------------------|---------|----------|---------|---------|-----------------------------
+File                           | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s           
+-------------------------------|---------|----------|---------|---------|-----------------------------
+All files                      |    4.66 |     4.47 |    6.61 |    4.63 |                             
+ app/api/ai                    |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-246                       
+ app/api/ai/jobs               |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-127                       
+ app/api/ai/jobs/retry         |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-109                       
+ app/api/ai/preview            |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-93                        
+ app/api/ai/runs/[id]          |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-71                        
+ app/api/ai/runs/[id]/progress |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-50                        
+ app/api/asset-age             |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-38                        
+ app/api/assets                |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-320                       
+ app/api/assets/[id]           |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-239                       
+ app/api/assets/rebuild-codes  |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-63                        
+ app/api/audit-log             |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-27                        
+ app/api/auth/[...nextauth]    |       0 |      100 |     100 |       0 |                             
+  route.ts                     |       0 |      100 |     100 |       0 | 1-6                         
+ app/api/chat                  |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-322                       
+ app/api/dashboard             |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-157                       
+ app/api/docs                  |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 6-54                        
+ app/api/docs.json             |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 6-19                        
+ app/api/health                |       0 |      100 |       0 |       0 |                             
+  route.ts                     |       0 |      100 |       0 |       0 | 6-9                         
+ app/api/master-data           |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-310                       
+ app/api/mutations             |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-114                       
+ app/api/notifications         |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-93                        
+ app/api/profile               |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-98                        
+ app/api/recommendations       |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-67                        
+ app/api/reports               |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-400                       
+ app/api/service-records       |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-112                       
+ app/api/settings              |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-231                       
+ app/api/settings/backup       |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-154                       
+ app/api/settings/clear        |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-33                        
+ app/api/settings/import       |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-183                       
+ app/api/settings/import-sql   |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-46                        
+ app/api/system/health         |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-156                       
+ app/api/users                 |       0 |        0 |       0 |       0 |                             
+  route.ts                     |       0 |        0 |       0 |       0 | 1-195                       
+ lib                           |     9.5 |     7.59 |    9.09 |   10.22 |                             
+  api.ts                       |       0 |        0 |       0 |       0 | 1-57                        
+  asset-print.ts               |       0 |        0 |       0 |       0 | 1-245                       
+  audit.ts                     |       0 |        0 |       0 |       0 | 2-11                        
+  auth.ts                      |       0 |        0 |       0 |       0 | 2-90                        
+  branding.ts                  |       0 |      100 |     100 |       0 | 1-6                         
+  cache.ts                     |       0 |        0 |       0 |       0 | 6-248                       
+  error-handler.ts             |   76.27 |    49.05 |   61.11 |   76.27 | 66,78,84-90,121,135,149-156 
+  health-check.ts              |       0 |        0 |       0 |       0 | 6-144                       
+  logger.ts                    |       0 |        0 |       0 |       0 | 6-176                       
+  master-data-defaults.ts      |       0 |      100 |     100 |       0 | 1                           
+  master-data-service.ts       |       0 |        0 |       0 |       0 | 1-123                       
+  permissions.ts               |       0 |        0 |       0 |       0 | 1-97                        
+  prisma.ts                    |       0 |        0 |     100 |       0 | 1-14                        
+  rate-limit.ts                |      64 |    38.46 |     100 |   71.42 | 8-10,16-18                  
+  rbac.ts                      |       0 |        0 |       0 |       0 | 6-256                       
+  request-origin.ts            |       0 |        0 |       0 |       0 | 3-7                         
+  swagger.ts                   |       0 |      100 |     100 |       0 | 6                           
+  system-settings.ts           |       0 |        0 |       0 |       0 | 62-243                      
+  utils.ts                     |       0 |        0 |       0 |       0 | 1-130                       
+ lib/ai                        |   14.23 |     12.3 |   18.46 |   12.63 |                             
+  Ollama.ts                    |       0 |        0 |       0 |       0 | 2-114                       
+  cache.ts                     |       0 |        0 |       0 |       0 | 2-179                       
+  common.ts                    |       0 |        0 |       0 |       0 | 2-273                       
+  executive-summary.ts         |       0 |        0 |       0 |       0 | 1-119                       
+  recommendation.ts            |       0 |        0 |       0 |       0 | 2-273                       
+  scoring-engine.ts            |   81.31 |    56.69 |   70.58 |    85.5 | 187-212,216-226,240-242     
+  worker.ts                    |       0 |        0 |       0 |       0 | 1-365                       
+-------------------------------|---------|----------|---------|---------|-----------------------------
+Jest: "global" coverage threshold for statements (60%) not met: 4.66%
+Jest: "global" coverage threshold for branches (60%) not met: 4.47%
+Jest: "global" coverage threshold for lines (60%) not met: 4.63%
+Jest: "global" coverage threshold for functions (60%) not met: 6.61%
+Test Suites: 3 passed, 3 total
+Tests:       22 passed, 22 total
+Snapshots:   0 total
+Time:        10.439 s
+Ran all test suites.
