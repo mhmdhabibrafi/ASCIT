@@ -583,8 +583,8 @@ export function AppShell({ children }: { children: React.ReactNode }) {
               <span className="font-bold text-slate-800">Muhammad Habib Rafi</span>. All rights reserved.
             </div>
             <span className="hidden sm:inline text-slate-300">|</span>
-            <div className="text-[11px] text-slate-400">
-              System: <span className="font-semibold text-emerald-700">{systemBrand.name}</span>
+            <div className="text-[11px] text-slate-500">
+              <span className="font-semibold text-emerald-700">{hospitalBrand.site}</span>
             </div>
           </div>
           <div className="md:text-right font-medium text-slate-400 flex items-center justify-center md:justify-end gap-2.5 text-[11px]">
